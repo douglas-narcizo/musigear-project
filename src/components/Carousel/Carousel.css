@@ -1,0 +1,47 @@
+.carousel-container {
+  display: flex;
+  position: relative;
+  margin: 0 auto;
+/*  max-width: 80%; */
+/*  border: 1px solid lightgray; */
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  margin: 0;
+}
+
+.carousel-inner {
+  display: flex;
+  margin: 0;
+}
+
+.carousel-button {
+  /*
+  top: 43%;
+  position: absolute;
+  font-size: 1.2rem;
+  align-self: center;
+  background-color: rgba(40, 40, 40, 0.3);
+  color: white;
+  padding: 9px 12px;
+  border-radius: 5px;
+  z-index: 5;
+  border: solid 1px  rgba(40, 40, 40, 0.7) ;
+  */
+  cursor: pointer;
+}
+
+/*
+.carousel-button.prev {
+  transform: translateX(-75%);
+}
+
+.carousel-button.next {
+  transform: translateX(50%);
+}
+
+.carousel-button:hover {
+  background-color: rgba(90, 90, 90, 0.8);
+}
+*/

@@ -1,0 +1,42 @@
+.Login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+/*
+text-align: center;
+border: 1px solid #ddd;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+*/  
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/*
+.inputGroup {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.Login-container button {
+  padding: 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+*/

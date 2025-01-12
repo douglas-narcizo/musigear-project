@@ -18,6 +18,9 @@
 .env.test.local
 .env.production.local
 
+/starters
+/src/components/shared-theme-template
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

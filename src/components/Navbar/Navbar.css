@@ -1,0 +1,31 @@
+/*
+.nav-bar a {
+    text-decoration: none;
+    margin: 0 1.5rem;
+    color: lightgray;
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+*/
+
+/*
+color: lightgray;
+*/
+.user-badge {
+    font-size: 1rem;
+    font-weight: normal;
+    position: absolute;
+    right: 10rem;
+    z-index: 5;
+}
+
+/*
+color: lightgray;
+*/
+.user-badge a {
+    text-decoration: none;
+}
+
+.nav-bar a:hover, .user-badge a:hover  {
+    text-decoration: underline;
+}

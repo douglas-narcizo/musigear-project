@@ -7,7 +7,8 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './components/Login/Login';
-import User from './components/User/User';
+import Register from './pages/Register';
+import User from './pages/User';
 import Product from './pages/Product';
 import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
@@ -22,6 +23,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/user' element={<User />} />
         <Route path='/products/:productId' element={<Product />} />
         <Route path='/shopping-cart' element={<ShoppingCart />} />

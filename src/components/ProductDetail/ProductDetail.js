@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -5,18 +7,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  trailingZeroDisplay: 'stripIfInteger',
-});
+import { currency } from '../../util/util';
+import { Container } from '@mui/material';
 
 export default function ProductDetail (props) {
   const { product } = props;
+  const { handleAddToCart, handleRemoveFromCart } = useContext(CartContext);
   
   return (
-    <Box sx={{ minWidth: 280, height: '70vh' }} className='product-container'>
+    <Container sx={{ height: '70vh' }} className='product-container'>
       <Card sx={{ height: '98%', position: 'relative' }} className='product-wrapper'>
         <CardMedia
           component='img'
@@ -47,12 +46,19 @@ export default function ProductDetail (props) {
           <Button
             variant='contained'
             sx={{ width: 0.4 }}
-            onClick={() => {}}
+            onClick={() => handleAddToCart(product.id)}
           >
             BUY
           </Button>
+          <Button
+            variant='outlined'
+            sx={{ width: 0.4, ml: 1 }}
+            onClick={() => handleRemoveFromCart(product.id)}
+          >
+            REMOVE
+          </Button>
         </Box>
       </Card>
-    </Box>
+    </Container>
   );
 }

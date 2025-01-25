@@ -6,11 +6,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import './Carousel.css';
 
+/*rgba(0, 0, 0, 0.05)*/
 const CustomIconButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: 'rgba(0, 0, 0, 0.05)',
+  backgroundColor: 'background',
   border: '1px solid rgba(0, 0, 0, 0.2)',
   '&:hover': {
-    backgroundColor: 'rgba(0, 0, 0, 0.15)',
+    backgroundColor:'background',
+    border: '1px solid rgba(0, 0, 0, 0.4)',
+    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)'
   },
 }));
 
@@ -28,14 +31,14 @@ const Carousel = ({children, itemsToShow=3}) => {
 
   const prevButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={prevSlide}
-      sx={{ position: 'absolute', top: '43%', left: 0, zIndex: 5, transform: 'translateX(-85%) scale(1.2)' }}
+      sx={{ position: 'absolute', top: '43%', left: 0, zIndex: 5, transform: 'translateX(-85%) scale(1.4)' }}
     >
       <ChevronLeftIcon />
     </CustomIconButton>
   )
   const nextButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={nextSlide}
-      sx={{ position: 'absolute', top: '43%', right: 0, zIndex: 5, transform: 'translateX(60%) scale(1.2)' }}
+      sx={{ position: 'absolute', top: '43%', right: 0, zIndex: 5, transform: 'translateX(60%) scale(1.4)' }}
     >
       <ChevronRightIcon />
     </CustomIconButton>
@@ -51,14 +54,14 @@ const Carousel = ({children, itemsToShow=3}) => {
           className='carousel-inner'
           style={{
             transform: `translateX(${((100 / itemsToShow) * currentIndex) * -1 + 0.1}%)`,
-            transition: 'transform 0.35s ease-in-out'
+            transition: 'transform 0.3s ease-in-out'
           }}
         >
           {children}
         </div>
       </div>
 
-      {currentIndex <= children.length / itemsToShow ? nextButton : ''}
+      {currentIndex < children.length - itemsToShow ? nextButton : ''}
 
     </div>
   );

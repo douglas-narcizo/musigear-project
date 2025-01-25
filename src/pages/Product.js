@@ -25,7 +25,7 @@ export default function Product() {
       <Typography variant='h3' component='h1'>
         Product Detail
       </Typography>
-      <Typography variant='h5' component='h2'>
+      <Typography variant='h5' component='h2' sx={{ mb: 2 }}>
         Details for product:
       </Typography>
       {productDetails ? (

@@ -6,16 +6,19 @@ import { ThemeProvider } from '@mui/material';
 import App from './App';
 import { AppTheme } from './components/shared-theme/AppTheme';
 import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
 // import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <CssBaseline />
-      <ThemeProvider theme={AppTheme}>
-        <App />
-      </ThemeProvider>
+      <CartProvider>
+        <CssBaseline />
+        <ThemeProvider theme={AppTheme}>
+          <App />
+        </ThemeProvider>
+      </CartProvider>
     </AuthProvider>
   </React.StrictMode>
 );

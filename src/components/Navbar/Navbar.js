@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { CartContext } from '../../context/CartContext';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,6 +22,7 @@ const pages = [
 
 function Navbar() {
   const { user } = useContext(AuthContext);
+  const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleNavigation = (path) => {
@@ -34,7 +36,7 @@ function Navbar() {
           <Box component={'nav'} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                id={page.name}
+                key={page.name}
                 size='large'
                 sx={{ my: 2, color: 'primary.contrastText', display: 'block' }}
                 onClick={() => handleNavigation(page.path)}
@@ -45,9 +47,13 @@ function Navbar() {
           </Box>
           <Box>
           <IconButton size='large'>
-            {user ?
-              <Badge badgeContent={4} color='secondary'>
-                <ShoppingCartIcon fontSize='inherit' sx={{ color: 'primary.contrastText' }} />
+            {cart.itemsCount ?
+              <Badge badgeContent={cart.itemsCount} color='secondary'>
+                <ShoppingCartIcon
+                  fontSize='inherit'
+                  sx={{ color: 'primary.contrastText' }}
+                  onClick={() => handleNavigation('/shopping-cart')}
+                />
               </Badge>
                 :
               <ShoppingCartOutlinedIcon fontSize='inherit' sx={{ color: 'primary.contrastText' }} /> 

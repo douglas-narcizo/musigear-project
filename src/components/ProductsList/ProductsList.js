@@ -1,4 +1,4 @@
-import { addToCart } from '../../api/api';
+// import { addToCart } from '../../api/api';
 import Carousel from '../Carousel/Carousel';
 import ProductCard from '../ProductCard/ProductCard';
 import Typography from '@mui/material/Typography';
@@ -6,9 +6,11 @@ import './ProductsList.css';
 
 const itemsToShow = Math.floor((window.innerWidth - 240) / 280);
 
+/*
 const addProduct = async (cartId, productId, qty = 1) => {
   await addToCart(cartId, productId, qty);
 }
+*/
 
 export default function ProductsList (props) {
   const { products } = props;
@@ -20,7 +22,6 @@ export default function ProductsList (props) {
         <ProductCard
           key={item.id}
           product={item}
-          addToCart={addProduct}
         />
       )
     }

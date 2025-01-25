@@ -15,6 +15,6 @@ export const AppTheme = createTheme({
     divider: '#000',
   },
   shape: {
-    borderRadius: '8px',
+    borderRadius: 8,
   },
 });

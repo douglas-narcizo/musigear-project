@@ -83,37 +83,17 @@ export const checkLoginStatus = async () => {
       method: 'GET',
       credentials: 'include',
     });
-    if (response.ok) {
-      // return true;
-      const json = await response.json();
-      return json;
-    } else {
+    if (!response.ok) {
       return false;
     }
+    const json = await response.json();
+    return json;
+
   } catch (error) {
-    console.error('Session verification error:', error);
+//    console.error('Session verification error:', error);
     return false;
   }
 };
-
-/*
-export const fetchUserData = async () => {
-  try {
-    const response = await fetch(`${backendUrl}user/data`, {
-      method: 'GET',
-      credentials: 'include', // Include cookies in the request
-    });
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error('Failed to fetch user data');
-    }
-  } catch (error) {
-    console.error('Fetch user data error:', error);
-    throw error;
-  }
-};
-*/
 
 // ----- CART functions -----
 
@@ -156,3 +136,35 @@ export const removeFromCart = async (itemId) => {
   }
   return response.json();
 };
+
+// ----- CHECKOUT functions -----
+
+export const createOrder = async (cart) => {
+  const response = await fetch(`${backendUrl}cart/${cart.id}/checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(cart),
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to create order');
+  }
+  return response.json();
+};
+
+export const createPaymentIntent = async (items) => {
+  const response = await fetch(`${backendUrl}order/create-payment-intent`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({items}),
+    // credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to create payment intent');
+  }
+  return response;
+}

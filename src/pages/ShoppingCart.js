@@ -1,5 +1,7 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
+import { createOrder } from '../api/api';
 import { currency } from '../util/util';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -7,8 +9,21 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 export default function ShoppingCart() {
-  const { cart, handleRemoveFromCart } = useContext(CartContext);
+  const { cart, handleRemoveFromCart, setOrder } = useContext(CartContext);
+  const navigate = useNavigate();
 
+  const handleCreateOrder = async () => {
+    try {
+      const orderData = await createOrder(cart);
+      console.log('Checkout data:', orderData);
+      setOrder(orderData);
+      // Clear the cart
+      navigate('/checkout');
+    } catch (error) {
+      console.error('Failed to create order:', error);
+    }
+  };
+  
   return (
     <Container maxWidth='md' sx={{ padding: 2 }}>
       <Typography variant="h4" gutterBottom>
@@ -62,7 +77,7 @@ export default function ShoppingCart() {
           <Typography variant="h5" sx={{ marginRight: 2 }}>
             Total: {currency.format(cart.total)}
           </Typography>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" onClick={() => handleCreateOrder()}>
             Checkout
           </Button>
         </Box>

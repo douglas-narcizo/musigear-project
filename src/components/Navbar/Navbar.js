@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
-// import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import './Navbar.css';
 
 const pages = [
@@ -30,22 +30,21 @@ function Navbar() {
   }
   
   return (
-    <AppBar position='sticky'>
-      <Container maxWidth='xl'>
-        <Toolbar>
-          <Box component={'nav'} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                size='large'
-                sx={{ my: 2, color: 'primary.contrastText', display: 'block' }}
-                onClick={() => handleNavigation(page.path)}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-          <Box>
+    <AppBar
+      position='sticky'
+      sx={{
+        background: 'linear-gradient(8deg,hsl(347, 65%, 43%) 30%,hsl(21, 78%, 48%) 90%)',
+      }}
+    >
+      <Container maxWidth='xl' sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography
+          variant='h3' component='h1' fontWeight='500' fontStyle='italic'
+          sx={{ ml: 4, mt: 2, letterSpacing: 4, color: 'primary.contrastText', display: 'inline-flex' }}
+        >
+          MusiGear
+        </Typography>
+
+        <Box sx={{ mr: 4, mt: 2, flexGrow: 1, textAlign: 'right' }}>
           <IconButton size='large'>
             {cart.itemsCount ?
               <Badge badgeContent={cart.itemsCount} color='secondary'>
@@ -59,21 +58,34 @@ function Navbar() {
               <ShoppingCartOutlinedIcon fontSize='inherit' sx={{ color: 'primary.contrastText' }} /> 
             }
           </IconButton>
-            {user ?
+
+          {user ?
+            <Button sx={{ color: 'primary.contrastText', ml: 2 }} onClick={() => handleNavigation('/user')}>
+              {user.firstName}
+            </Button>
+          :
+            <Button sx={{ color: 'primary.contrastText', ml: 2 }} onClick={() => handleNavigation('/login')}>
+              Login
+            </Button>
+          }
+        </Box>
+
+      </Container>
+      <Container maxWidth='xl'>
+        <Toolbar variant='dense'>
+          <Box component={'nav'} sx={{ m: 0, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
               <Button
-                sx={{ color: 'primary.contrastText', ml: 2 }}
-                onClick={() => handleNavigation('/user')}
+                key={page.name}
+                size='large'
+                sx={{ px: 2, color: 'primary.contrastText', display: 'block', border: '1px solid hsla(0, 0%, 100%, 0)',
+                  '&:hover': { background: 'hsla(0, 0%, 100%, 0.2)', border: '1px solid hsla(0, 0%, 100%, 0.5)' }
+                }}
+                onClick={() => handleNavigation(page.path)}
               >
-                {user.firstName}
+                {page.name}
               </Button>
-            :
-              <Button
-                sx={{ color: 'primary.contrastText', ml: 2 }}
-                onClick={() => handleNavigation('/login')}
-              >
-                Login
-              </Button>
-            }
+            ))}
           </Box>
         </Toolbar>
       </Container>

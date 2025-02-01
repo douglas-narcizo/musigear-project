@@ -1,8 +1,10 @@
 .products-list-container {
     margin: 0.5rem auto;
     display: flex;
-    overflow: scroll;
-/*    border: 1px solid lightgray;
-    border-radius: 8px; */
+    flex-wrap: wrap;
+    /*
     max-width: 80%;
+    overflow: scroll;
+    border: 1px solid lightgray;
+    border-radius: 8px; */
 }

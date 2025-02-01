@@ -5,6 +5,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
 import Home from './pages/Home';
 import Login from './components/Login/Login';
 import Register from './pages/Register';
@@ -12,8 +13,11 @@ import User from './pages/User';
 import Product from './pages/Product';
 import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
+import Complete from './pages/Complete';
 import Navbar from "./components/Navbar/Navbar";
 // import ResponsiveAppBar from "./components/ProductDetail/ProductDetail";
+
+const stripePromise = loadStripe('pk_test_51QlI9yRgNuMY1fihqX5acVzEjnRKripdrBaolIcd1gSVQBigCCOd1sLmeQMuQ0XOTsSH2X7kPeRf6Yo4MM7CtO6y00IbUf45wX');
 
 export default function App() {
   
@@ -27,7 +31,8 @@ export default function App() {
         <Route path='/user' element={<User />} />
         <Route path='/products/:productId' element={<Product />} />
         <Route path='/shopping-cart' element={<ShoppingCart />} />
-        <Route path='/checkout' element={<Checkout />} />
+        <Route path='/checkout' element={<Checkout stripe={stripePromise} />} />
+        <Route path='/order-complete' element={<Complete stripe={stripePromise} />} />
       </Routes>
     </Router>
   );

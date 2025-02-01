@@ -3,6 +3,7 @@ import Carousel from '../Carousel/Carousel';
 import ProductCard from '../ProductCard/ProductCard';
 import Typography from '@mui/material/Typography';
 import './ProductsList.css';
+import Container from '@mui/material/Container';
 
 const itemsToShow = Math.floor((window.innerWidth - 240) / 280);
 
@@ -37,9 +38,9 @@ export default function ProductsList (props) {
       <Typography variant='h5' sx={{ fontWeight: 'bold' }} >
         Products List:
       </Typography>
-      <div className='products-list-container'>
+      <Container maxWidth='lg' className='products-list-container'>
         {productFeed(products)}
-      </div>
+      </Container>
     </div>
   );
 }

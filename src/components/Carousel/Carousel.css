@@ -7,8 +7,10 @@
 }
 
 .carousel-wrapper {
-  overflow: hidden;
+  overflow: scroll;
+  scrollbar-width: none;
   margin: 0;
+  display: flex;
 }
 
 .carousel-inner {

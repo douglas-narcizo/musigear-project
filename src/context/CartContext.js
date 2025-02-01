@@ -5,13 +5,16 @@ import { AuthContext } from './AuthContext';
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const { user } = useContext(AuthContext);
+
   const emptyCart = useRef({
     items: [],
     itemsCount: 0,
     total: 0,
   }).current;
-  const { user } = useContext(AuthContext);
+
   const [cart, setCart] = useState(emptyCart);
+  const [order, setOrder] = useState(null);
 
   useEffect(() => {
     const loadCart = async () => {
@@ -67,8 +70,29 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  /*
+  const handleCheckout = async () => {
+    try {
+      const orderData = await createOrder(cart);
+      console.log('Checkout data:', orderData);
+      // Clear the cart
+      // setCart(emptyCart);
+    } catch (error) {
+      console.error('Failed to checkout', error);
+    }
+  };
+  */
+
   return (
-    <CartContext.Provider value={{ cart, handleAddToCart, handleRemoveFromCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        handleAddToCart,
+        handleRemoveFromCart,
+        order,
+        setOrder
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

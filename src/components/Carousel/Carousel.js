@@ -1,5 +1,5 @@
 // Import necessary modules
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -8,26 +8,56 @@ import './Carousel.css';
 
 /*rgba(0, 0, 0, 0.05)*/
 const CustomIconButton = styled(IconButton)(({ theme }) => ({
-  backgroundColor: 'background',
-  border: '1px solid rgba(0, 0, 0, 0.2)',
+  backgroundColor: theme.palette.background.default,
+  border: '1px solid rgba(0, 0, 0, 0.1)',
   '&:hover': {
+    color: theme.palette.primary.main,
     backgroundColor:'background',
-    border: '1px solid rgba(0, 0, 0, 0.4)',
-    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.3)'
+    border: '1px solid rgba(0, 0, 0, 0.2)',
+    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.2)'
   },
 }));
 
 const Carousel = ({children, itemsToShow=3}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const carouselWrapperRef = useRef(null);
 //  const rem = parseInt(getComputedStyle(document.documentElement).fontSize);
 
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => Math.min(prevIndex + itemsToShow, children.length - itemsToShow));
+    if (carouselWrapperRef.current) {
+      const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
+      carouselWrapperRef.current.scrollBy({ left: itemWidth * itemsToShow, behavior: 'smooth' });
+    }
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => Math.max(prevIndex - itemsToShow, 0));
+    if (carouselWrapperRef.current) {
+      const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
+      carouselWrapperRef.current.scrollBy({ left: -itemWidth * itemsToShow, behavior: 'smooth' });
+    }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (carouselWrapperRef.current) {
+        const scrollLeft = carouselWrapperRef.current.scrollLeft;
+        const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
+        const newIndex = Math.round(scrollLeft / itemWidth);
+        setCurrentIndex(newIndex);
+      }
+    };
+
+    const carouselWrapper = carouselWrapperRef.current;
+    if (carouselWrapper) {
+      carouselWrapper.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (carouselWrapper) {
+        carouselWrapper.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [children.length, itemsToShow]);
 
   const prevButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={prevSlide}
@@ -45,18 +75,12 @@ const Carousel = ({children, itemsToShow=3}) => {
   )
 
   return (
-    <div className='carousel-container' style={{width: itemsToShow * 280 }}>
+    <div className='carousel-container' style={{width: itemsToShow * 280 - 2 }}>
 
       {currentIndex > 0 ? prevButton : ''}
-        
-      <div className='carousel-wrapper'>
-        <div
-          className='carousel-inner'
-          style={{
-            transform: `translateX(${((100 / itemsToShow) * currentIndex) * -1 + 0.1}%)`,
-            transition: 'transform 0.3s ease-in-out'
-          }}
-        >
+
+      <div className="carousel-wrapper" ref={carouselWrapperRef}>
+        <div className='carousel-inner'>
           {children}
         </div>
       </div>
@@ -68,3 +92,11 @@ const Carousel = ({children, itemsToShow=3}) => {
 };
 
 export default Carousel;
+
+
+/*
+          style={{
+            transform: `translateX(${((100 / itemsToShow) * currentIndex) * -1 + 0.1}%)`,
+            transition: 'transform 0.3s ease-in-out'
+          }}
+*/

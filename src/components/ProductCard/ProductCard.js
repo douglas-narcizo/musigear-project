@@ -21,7 +21,7 @@ function ProductCard (props) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ minWidth: 280, height: '30rem' }} className='product-container'>
+    <Box maxWidth='280px' sx={{ minWidth: 280, height: '30rem' }} className='product-container'>
       <Card sx={{ height: '98%', mr: '1rem', position: 'relative' }} className='product-wrapper'>
         <CardActionArea onClick={() => navigate(`/products/${product.id}`)}>
           <CardMedia
@@ -31,7 +31,7 @@ function ProductCard (props) {
             image={product.preview}
             alt={`${product.name} preview image`}
           />
-          <Typography variant='h6' sx={{ fontSize: 14, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
+          <Typography variant='h6' sx={{ textAlign: 'center', fontSize: 14, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
             PRODUCT {product.id.slice(0, 3)} – {product.category.toUpperCase()}
           </Typography>
           <CardHeader

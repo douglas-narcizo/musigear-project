@@ -22,8 +22,9 @@
     background-color: white;
     background-color: #f0ffff;
     border-color: #0b5050;
-*/
     box-shadow: 3px 3px #0b5050;
+*/
+    box-shadow: 3px 3px 3px #a53749;
     transition-duration: 0.4s;
 }
 

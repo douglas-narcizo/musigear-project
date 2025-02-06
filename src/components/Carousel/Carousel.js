@@ -1,6 +1,7 @@
 // Import necessary modules
 import React, { useState, useRef, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -61,21 +62,22 @@ const Carousel = ({children, itemsToShow=3}) => {
 
   const prevButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={prevSlide}
-      sx={{ position: 'absolute', top: '43%', left: 0, zIndex: 5, transform: 'translateX(-85%) scale(1.4)' }}
+      sx={{ position: 'absolute', top: '43%', left: 0, zIndex: 5, transform: 'translateX(-20%) scale(1.4)' }}
     >
       <ChevronLeftIcon />
     </CustomIconButton>
   )
+  
   const nextButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={nextSlide}
-      sx={{ position: 'absolute', top: '43%', right: 0, zIndex: 5, transform: 'translateX(60%) scale(1.4)' }}
+      sx={{ position: 'absolute', top: '43%', right: 0, zIndex: 5, transform: 'translateX(20%) scale(1.4)' }}
     >
       <ChevronRightIcon />
     </CustomIconButton>
   )
 
   return (
-    <div className='carousel-container' style={{width: itemsToShow * 280 - 2 }}>
+    <Container className='carousel-container' maxWidth='xl' sx={{ position: 'relative', mx: 0, display: { xs: 'none' } }}>
 
       {currentIndex > 0 ? prevButton : ''}
 
@@ -87,7 +89,7 @@ const Carousel = ({children, itemsToShow=3}) => {
 
       {currentIndex < children.length - itemsToShow ? nextButton : ''}
 
-    </div>
+    </Container>
   );
 };
 
@@ -95,6 +97,9 @@ export default Carousel;
 
 
 /*
+
+ style={{width: (itemsToShow * 280) - 2 }}
+
           style={{
             transform: `translateX(${((100 / itemsToShow) * currentIndex) * -1 + 0.1}%)`,
             transition: 'transform 0.3s ease-in-out'

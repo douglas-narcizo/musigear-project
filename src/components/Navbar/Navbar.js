@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { CartContext } from '../../context/CartContext';
+import ProductContext from '../../context/ProductContext';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,18 +15,24 @@ import Badge from '@mui/material/Badge';
 import Typography from '@mui/material/Typography';
 import './Navbar.css';
 
-const pages = [
-  {name:'Home', path:'/'},
-  {name:'Shopping Cart', path:'/shopping-cart'},
-  {name:'Checkout', path:'/checkout'},
+const categories = [
+  {name:'All categories', path:'/'},
+  {name:'Guitars', path:'/?category=Guitars'},
+  {name:'Bass', path:'/?category=Bass'},
+  {name:'Drums', path:'/?category=Drums'},
+  {name:'Brass', path:'/?category=Brass'},
+  {name:'Pro Audio', path:'/?category=Pro Audio'},
+  {name:'Accessories', path:'/?category=Accessories'},
 ];
 
 function Navbar() {
   const { user } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
+  const { category, setCategory } = useContext(ProductContext);
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
+  const handleNavigation = (path, catName) => {
+    setCategory(catName);
     navigate(path);
   }
   
@@ -33,7 +40,8 @@ function Navbar() {
     <AppBar
       position='sticky'
       sx={{
-        background: 'linear-gradient(8deg,hsl(347, 65%, 43%) 30%,hsl(21, 78%, 48%) 90%)',
+        background: 'linear-gradient(8deg,hsla(347, 65%, 43%, 1) 30%,hsla(21, 78%, 48%, 1) 90%)',
+        borderBottom: '4px solid hsla(359, 90%, 65%, 1)',
       }}
     >
       <Container maxWidth='xl' sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -73,17 +81,20 @@ function Navbar() {
       </Container>
       <Container maxWidth='xl'>
         <Toolbar variant='dense'>
-          <Box component={'nav'} sx={{ m: 0, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+          <Box component='nav' sx={{ m: 0, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {categories.map((cat) => (
               <Button
-                key={page.name}
+                key={cat.name}
                 size='large'
-                sx={{ px: 2, color: 'primary.contrastText', display: 'block', border: '1px solid hsla(0, 0%, 100%, 0)',
-                  '&:hover': { background: 'hsla(0, 0%, 100%, 0.2)', border: '1px solid hsla(0, 0%, 100%, 0.5)' }
+                fontWeight='500'
+                sx={{ px: 2, color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
+                  border: category === cat.name ? '1px solid hsla(0, 0%, 100%, 0.5)' : '1px solid hsla(0, 0%, 100%, 0)',
+                  backgroundColor: category === cat.name ? '#a53749' : 'transparent',
+                  '&:hover': { color: 'primary.contrastText', border: '1px solid hsla(0, 0%, 100%, 0.5)' }
                 }}
-                onClick={() => handleNavigation(page.path)}
+                onClick={() => handleNavigation(cat.path)}
               >
-                {page.name}
+                {cat.name}
               </Button>
             ))}
           </Box>

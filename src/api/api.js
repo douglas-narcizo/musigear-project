@@ -65,6 +65,15 @@ export const loginWithGoogle = async () => {
   return json;
 }
 
+export const loginWithFacebook = async () => {
+  const response = await fetch(`${backendUrl}user/facebook`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  const json = await response.json();
+  return json;
+}
+
 export const userLogout = async () => {
   const response = await fetch(`${backendUrl}user/logout`, {
     method: 'POST',
@@ -90,7 +99,6 @@ export const checkLoginStatus = async () => {
     return json;
 
   } catch (error) {
-//    console.error('Session verification error:', error);
     return false;
   }
 };
@@ -113,7 +121,7 @@ export const addToCart = async (itemId) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({productId:itemId, qty:1}), // `{"productId":"${item.id}","qty":1}`, // REVIEW THIS - MAYBE USE stringify
+    body: JSON.stringify({productId:itemId, qty:1}),
     credentials: 'include',
   });
   if (!response.ok) {
@@ -128,7 +136,7 @@ export const removeFromCart = async (itemId) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({productId:itemId, qty:-1}), // `{"productId":"${item.id}","qty":-1}`, // REVIEW THIS - MAYBE USE stringify
+    body: JSON.stringify({productId:itemId, qty:-1}),
     credentials: 'include',
   });
   if (!response.ok) {

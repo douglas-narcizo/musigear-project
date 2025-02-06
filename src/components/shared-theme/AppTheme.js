@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, GlobalStyles } from "@mui/material";
 
 export const AppTheme = createTheme({
   palette: {
@@ -17,6 +17,42 @@ export const AppTheme = createTheme({
     borderRadius: 8,
   },
 });
+
+export const globalMuiStyleOverride = (
+  <GlobalStyles
+    styles={{
+      '@media (max-width:600px)': {
+        html: {
+          fontSize: '12px',
+        },
+        '.MuiContainer-root': {
+          paddingLeft: '0.5rem !important',
+          paddingRight: '0.5rem !important',
+        },
+      },
+    }}
+  />
+);
+
+/* --- NOT WORKING ---
+  typography: {
+    htmlFontSize: 16,
+    '@media (max-width:600px)': {
+      htmlFontSize: 13,
+    },
+    overrides: {
+      MuiCssBaseline: {
+        '@global': {
+          '@media (max-width:600px)': {
+            html: {
+              fontSize: '14px',
+            },
+          },
+        },
+      },
+    },
+  },
+*/
 
 /* --- GREEN THEME ---
 export const AppTheme = createTheme({

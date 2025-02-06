@@ -4,21 +4,25 @@ import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material';
 import App from './App';
-import { AppTheme } from './components/shared-theme/AppTheme';
+import { AppTheme, globalMuiStyleOverride } from './components/shared-theme/AppTheme';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ProductProvider } from './context/ProductContext';
 // import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <CartProvider>
-        <CssBaseline />
-        <ThemeProvider theme={AppTheme}>
-          <App />
-        </ThemeProvider>
-      </CartProvider>
+      <ProductProvider>
+        <CartProvider>
+          <CssBaseline />
+          <ThemeProvider theme={AppTheme}>
+            {globalMuiStyleOverride}
+            <App />
+          </ThemeProvider>
+        </CartProvider>
+      </ProductProvider>
     </AuthProvider>
   </React.StrictMode>
 );

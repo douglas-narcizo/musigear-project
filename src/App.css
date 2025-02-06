@@ -3,7 +3,7 @@
 }
 
 .product-wrapper:hover {
-  box-shadow: 3px 3px #0b5050;
+  box-shadow: 3px 3px 4px hsla(350, 10%, 40%, 0.5);
   transition-duration: 0.4s;
 }
 

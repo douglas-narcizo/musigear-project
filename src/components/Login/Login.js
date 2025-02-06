@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 // import GoogleIcon from '@mui/icons-material/Google';
-import { GoogleIconColor } from '../../util/CustomIcons';
+import { GoogleIconColor, FacebookIcon } from '../../util/CustomIcons';
 import Divider from '@mui/material/Divider';
 import './Login.css';
 
@@ -32,6 +32,11 @@ export default function Login() {
   const handleGoogleLogin = () => {
     console.log('frontend - handle google login');
     window.location.href = 'http://localhost:4000/api/user/google';
+  };
+
+  const handleFacebookLogin = () => {
+    console.log('frontend - handle facebook login');
+    window.location.href = 'http://localhost:4000/api/user/facebook';
   };
 
   return (
@@ -83,8 +88,16 @@ export default function Login() {
             variant='outlined'
             endIcon={<GoogleIconColor />}
             onClick={handleGoogleLogin}
+            sx={{mb: 2}}
           >
-            Log in with Google
+            Continue with Google
+          </Button>
+          <Button
+            variant='outlined'
+            endIcon={<FacebookIcon />}
+            onClick={handleFacebookLogin}
+          >
+            Continue with Facebook
           </Button>
         </Stack>
       </Box>

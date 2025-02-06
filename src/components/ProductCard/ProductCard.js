@@ -21,13 +21,12 @@ function ProductCard (props) {
   const navigate = useNavigate();
 
   return (
-    <Box maxWidth='280px' sx={{ minWidth: 280, height: '30rem' }} className='product-container'>
-      <Card sx={{ height: '98%', mr: '1rem', position: 'relative' }} className='product-wrapper'>
+    <Box sx={{ width: { xs: '14.5rem', md: '17.5rem' }, height: '32rem' }} className='product-container'>
+      <Card sx={{ width: { xs: '14rem', md: '16.5rem' }, height: '98%', mx: '6px', position: 'relative' }} className='product-wrapper'>
         <CardActionArea onClick={() => navigate(`/products/${product.id}`)}>
           <CardMedia
             component='img'
-            height='250'
-            width='100%'
+            sx={{ height: '16rem', width: '100%' }}
             image={product.preview}
             alt={`${product.name} preview image`}
           />
@@ -36,9 +35,9 @@ function ProductCard (props) {
           </Typography>
           <CardHeader
             title={product.name}
-            titleTypographyProps={{ fontWeight: 500 }}
+            titleTypographyProps={{ fontSize: '1.2rem', fontWeight: 500, gutterBottom: true }}
             subheader={product.description}
-            subheaderTypographyProps={{ lineHeight: 1.3, height: 38, overflow: 'hidden' }}
+            subheaderTypographyProps={{ lineHeight: 1.2, height: 40, overflow: 'hidden' }}
             sx={{ pt: 1, pb: 1, textAlign: 'left' }}
           />
           <CardContent sx={{ pt: 0, textAlign: 'left' }}>

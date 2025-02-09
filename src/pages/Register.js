@@ -16,7 +16,7 @@ export default function Register() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [error, setError] = useState('');
-  const { register } = useContext(AuthContext);
+  const { register, login } = useContext(AuthContext);
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,12 +35,13 @@ export default function Register() {
       return;
     }
     if (!validatePassword(password)) {
-      setError('Password must be at least 8 characters long, include one number, one special character, one lower case letter, and one upper case letter');
+      setError('Password must be at least 8 characters long, and include lower and upper case letters, numbers and special characters.');
       return;
     }
     setError('');
-    // Implement sign-up logic here
+
     await register({ email, password, firstName, lastName });
+    await login(email, password); // Log in user after registration
     navigate('/user');
   };
 

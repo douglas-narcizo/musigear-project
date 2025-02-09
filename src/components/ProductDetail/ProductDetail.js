@@ -1,14 +1,16 @@
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { currency } from '../../util/util';
-import { Container } from '@mui/material';
+// import { currency } from '../../util/util';
+import Price from '../Price/Price';
+import { Rating } from '@mui/material';
 
 export default function ProductDetail (props) {
   const { product } = props;
@@ -38,9 +40,13 @@ export default function ProductDetail (props) {
           <Typography variant='body2' sx={{ color: 'primary.main', fontWeight: 500, position: 'absolute', top: '70%', right: '1rem' }}>
             Stock: {product.stock}
           </Typography>
-          <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}>
+          {/* <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}>
             {currency.format(product.price)}
-          </Typography>
+            </Typography> */}
+
+          <Rating name='product-rating' value={product.rating} precision={0.5} readOnly />
+
+          <Price amount={product.price} sx={{ color: 'success.main', transform: 'translate(13%) scale(1.25)' }} />
         </CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button

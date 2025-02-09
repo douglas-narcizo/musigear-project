@@ -11,8 +11,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyUser = async () => {
       const sessionUser = await checkLoginStatus();
-//      const storedUser = localStorage.getItem('user');
-
       if (sessionUser) {
         setUser(sessionUser);
         setIsAuthenticated(true);
@@ -57,9 +55,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithGoogleHandler = async () => {
     try {
-      console.log('handler do authcontext');
       const userData = await loginWithGoogle();
-      console.log('Google login:', userData);
       if (userData) {
         setUser(userData);
         setIsAuthenticated(true);

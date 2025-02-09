@@ -19,7 +19,7 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const Carousel = ({children, itemsToShow=3}) => {
+const Carousel = ({children, carouselItemsToShow=3}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselWrapperRef = useRef(null);
 //  const rem = parseInt(getComputedStyle(document.documentElement).fontSize);
@@ -27,14 +27,14 @@ const Carousel = ({children, itemsToShow=3}) => {
   const nextSlide = () => {
     if (carouselWrapperRef.current) {
       const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
-      carouselWrapperRef.current.scrollBy({ left: itemWidth * itemsToShow, behavior: 'smooth' });
+      carouselWrapperRef.current.scrollBy({ left: itemWidth * carouselItemsToShow, behavior: 'smooth' });
     }
   };
 
   const prevSlide = () => {
     if (carouselWrapperRef.current) {
       const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
-      carouselWrapperRef.current.scrollBy({ left: -itemWidth * itemsToShow, behavior: 'smooth' });
+      carouselWrapperRef.current.scrollBy({ left: -itemWidth * carouselItemsToShow, behavior: 'smooth' });
     }
   };
 
@@ -58,7 +58,7 @@ const Carousel = ({children, itemsToShow=3}) => {
         carouselWrapper.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [children.length, itemsToShow]);
+  }, [children.length, carouselItemsToShow]);
 
   const prevButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={prevSlide}
@@ -77,7 +77,7 @@ const Carousel = ({children, itemsToShow=3}) => {
   )
 
   return (
-    <Container className='carousel-container' maxWidth='xl' sx={{ position: 'relative', mx: 0, display: { xs: 'none' } }}>
+    <Container className='carousel-container' maxWidth='xl' sx={{ position: 'relative', mx: 0 }}>
 
       {currentIndex > 0 ? prevButton : ''}
 
@@ -87,7 +87,7 @@ const Carousel = ({children, itemsToShow=3}) => {
         </div>
       </div>
 
-      {currentIndex < children.length - itemsToShow ? nextButton : ''}
+      {currentIndex < children.length - carouselItemsToShow ? nextButton : ''}
 
     </Container>
   );
@@ -98,10 +98,10 @@ export default Carousel;
 
 /*
 
- style={{width: (itemsToShow * 280) - 2 }}
+ style={{width: (carouselItemsToShow * 280) - 2 }}
 
           style={{
-            transform: `translateX(${((100 / itemsToShow) * currentIndex) * -1 + 0.1}%)`,
+            transform: `translateX(${((100 / carouselItemsToShow) * currentIndex) * -1 + 0.1}%)`,
             transition: 'transform 0.3s ease-in-out'
           }}
 */

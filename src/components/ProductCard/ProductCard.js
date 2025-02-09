@@ -10,7 +10,9 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { currency } from '../../util/util';
+// import { currency } from '../../util/util';
+import Price from '../Price/Price';
+import Rating from '@mui/material/Rating';
 // import './ProductCard.css';
 
 function ProductCard (props) {
@@ -21,31 +23,52 @@ function ProductCard (props) {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ width: { xs: '14.5rem', md: '17.5rem' }, height: '32rem' }} className='product-container'>
-      <Card sx={{ width: { xs: '14rem', md: '16.5rem' }, height: '98%', mx: '6px', position: 'relative' }} className='product-wrapper'>
-        <CardActionArea onClick={() => navigate(`/products/${product.id}`)}>
+    <Box
+      className='product-container'
+      sx={{
+        width: { xs: '48%', md: '17.5rem' },
+        height: { xs: '33rem', md: '32rem' },
+      }}
+    >
+      <Card
+        className='product-wrapper'
+        sx={{
+          width: { xs: '97%', md: '16.5rem' },
+          height: '96%',
+          mx: '6px',
+          position: 'relative'
+        }}
+      >
+        <CardActionArea sx={{ height: { xs: '27.75rem', md: '27rem' } }} onClick={() => navigate(`/products/${product.id}`)}>
           <CardMedia
             component='img'
-            sx={{ height: '16rem', width: '100%' }}
+            sx={{ height: '16rem' /*, width: '100%'*/ }}
             image={product.preview}
             alt={`${product.name} preview image`}
           />
-          <Typography variant='h6' sx={{ textAlign: 'center', fontSize: 14, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
+          {/*
+          <Typography variant='h6' sx={{ textAlign: 'center', fontSize: '0.9rem', bgcolor: 'primary.main', color: 'primary.contrastText', textOverflow: 'ellipsis' }}>
             PRODUCT {product.id.slice(0, 3)} – {product.category.toUpperCase()}
           </Typography>
+          */}
           <CardHeader
             title={product.name}
-            titleTypographyProps={{ fontSize: '1.2rem', fontWeight: 500, gutterBottom: true }}
+            titleTypographyProps={{ fontSize: '1.2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.5px', gutterBottom: true }}
             subheader={product.description}
             subheaderTypographyProps={{ lineHeight: 1.2, height: 40, overflow: 'hidden' }}
-            sx={{ pt: 1, pb: 1, textAlign: 'left' }}
+            sx={{ pt: 1, pb: 1, textAlign: 'left', borderTop: '2px solid', borderColor: 'primary.light' }}
           />
-          <CardContent sx={{ pt: 0, textAlign: 'left' }}>
-            <Typography variant='body2' sx={{ color: 'primary.main', fontWeight: 500, position: 'absolute', top: 283, right: '1rem' }}>
-              Stock: {product.stock}
-            </Typography>
-            <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}>
-              {currency.format(product.price)}
+          <CardContent sx={{ pt: 0, pb: '0.5rem', textAlign: 'left' }}>
+            {/* <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}> */}
+              {/*currency.format(product.price)*/}
+            {/* </Typography> */}
+
+            <Rating name='product-rating' value={product.rating} precision={0.5} size='small' readOnly />
+
+            <Price amount={product.price} sx={{ color: 'success.main' }} />
+
+            <Typography variant='body2' sx={{ color: 'primary.light', fontWeight: 500, position: 'absolute', bottom: '0.75rem', right: '1rem' }}>
+              In stock: {product.stock}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -57,15 +80,6 @@ function ProductCard (props) {
           >
             BUY
           </Button>
-          {/*
-          <Button
-            variant='outlined'
-            sx={{ width: 0.4, textAlign: 'center', mt: 1 }}
-            onClick={() => handleRemoveFromCart(product.id)}
-          >
-            REMOVE
-          </Button>
-          */}
         </CardActions>
       </Card>
     </Box>

@@ -21,6 +21,7 @@ const categories = [
   {name:'Bass', path:'/?category=Bass'},
   {name:'Drums', path:'/?category=Drums'},
   {name:'Brass', path:'/?category=Brass'},
+  {name:'Microphones', path:'/?category=Microphones'},
   {name:'Pro Audio', path:'/?category=Pro Audio'},
   {name:'Accessories', path:'/?category=Accessories'},
 ];
@@ -41,18 +42,19 @@ function Navbar() {
       position='sticky'
       sx={{
         background: 'linear-gradient(8deg,hsla(347, 65%, 43%, 1) 30%,hsla(21, 78%, 48%, 1) 90%)',
-        borderBottom: '4px solid hsla(359, 90%, 65%, 1)',
+        borderBottom: '4px solid hsla(359, 90%, 65%, 1)', // hsla(338, 52%, 43%, 1)',
       }}
     >
       <Container maxWidth='xl' sx={{ display: 'flex', justifyContent: 'space-between' }}>
+
         <Typography
           variant='h3' component='h1' fontWeight='500' fontStyle='italic'
-          sx={{ ml: 4, mt: 2, letterSpacing: 4, color: 'primary.contrastText', display: 'inline-flex' }}
+          sx={{ ml: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, letterSpacing: 4, color: 'primary.contrastText', display: 'inline-flex' }}
         >
           MusiGear
         </Typography>
 
-        <Box sx={{ mr: 4, mt: 2, flexGrow: 1, textAlign: 'right' }}>
+        <Box sx={{ mr: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, flexGrow: 1, textAlign: 'right' }}>
           <IconButton size='large'>
             {cart.itemsCount ?
               <Badge badgeContent={cart.itemsCount} color='secondary'>
@@ -68,26 +70,28 @@ function Navbar() {
           </IconButton>
 
           {user ?
-            <Button sx={{ color: 'primary.contrastText', ml: 2 }} onClick={() => handleNavigation('/user')}>
+            <Button sx={{ color: 'primary.contrastText', ml: 1 }} onClick={() => handleNavigation('/user')}>
               {user.firstName}
             </Button>
           :
-            <Button sx={{ color: 'primary.contrastText', ml: 2 }} onClick={() => handleNavigation('/login')}>
+            <Button sx={{ color: 'primary.contrastText', ml: 1 }} onClick={() => handleNavigation('/login')}>
               Login
             </Button>
           }
         </Box>
 
       </Container>
-      <Container maxWidth='xl'>
-        <Toolbar variant='dense'>
-          <Box component='nav' sx={{ m: 0, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+      <Container maxWidth='xl' sx={{ display: { xs: 'none', sm: 'flex' }, overflow: 'auto' }}>
+        <Toolbar variant='dense' sx={{ m: 0 }}>
+          <Box component='nav' sx={{ m: 0, display: 'flex', overflow: 'auto' }}>
             {categories.map((cat) => (
               <Button
                 key={cat.name}
                 size='large'
                 fontWeight='500'
                 sx={{ px: 2, color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
+                  textWrap: 'nowrap',
                   border: category === cat.name ? '1px solid hsla(0, 0%, 100%, 0.5)' : '1px solid hsla(0, 0%, 100%, 0)',
                   backgroundColor: category === cat.name ? '#a53749' : 'transparent',
                   '&:hover': { color: 'primary.contrastText', border: '1px solid hsla(0, 0%, 100%, 0.5)' }
@@ -100,6 +104,31 @@ function Navbar() {
           </Box>
         </Toolbar>
       </Container>
+
+      <Container sx={{ display: { xs: 'flex', sm: 'none' }, overflowX: 'auto' }}>
+        <Toolbar variant='dense' sx={{ minHeight: '1.8rem' }}>
+          <Box component='nav' sx={{ display: 'flex', overflow: 'auto' }}>
+            {categories.map((cat) => (
+              <Button
+                key={cat.name}
+                size='small'
+                fontWeight='500'
+                sx={{ p: '0.2rem 0', color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
+                  textWrap: 'nowrap',
+                  border: category === cat.name ? '1px solid hsla(0, 0%, 100%, 0.5)' : '1px solid hsla(0, 0%, 100%, 0)',
+                  borderRadius: '0.35rem',
+                  backgroundColor: category === cat.name ? '#a53749' : 'transparent',
+                  '&:hover': { color: 'primary.contrastText', border: '1px solid hsla(0, 0%, 100%, 0.5)' }
+                }}
+                onClick={() => handleNavigation(cat.path)}
+              >
+                {cat.name}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </Container>
+
     </AppBar>
   );
 }

@@ -19,6 +19,7 @@
 .env.production.local
 
 /starters
+/drafts
 /src/components/shared-theme-template
 /.vscode
 

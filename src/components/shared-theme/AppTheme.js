@@ -4,7 +4,7 @@ export const AppTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#a53749',
+      main: '#a6355e',
     },
     secondary: {
       main: '#27886b',
@@ -13,6 +13,9 @@ export const AppTheme = createTheme({
       paper: '#f9f6f7',
     },
   },
+/*  typography: {
+    fontFamily: 'Lato',
+  }, */
   shape: {
     borderRadius: 8,
   },
@@ -21,38 +24,14 @@ export const AppTheme = createTheme({
 export const globalMuiStyleOverride = (
   <GlobalStyles
     styles={{
-      '@media (max-width:600px)': {
+      '@media (max-width:599px)': {
         html: {
           fontSize: '12px',
-        },
-        '.MuiContainer-root': {
-          paddingLeft: '0.5rem !important',
-          paddingRight: '0.5rem !important',
         },
       },
     }}
   />
 );
-
-/* --- NOT WORKING ---
-  typography: {
-    htmlFontSize: 16,
-    '@media (max-width:600px)': {
-      htmlFontSize: 13,
-    },
-    overrides: {
-      MuiCssBaseline: {
-        '@global': {
-          '@media (max-width:600px)': {
-            html: {
-              fontSize: '14px',
-            },
-          },
-        },
-      },
-    },
-  },
-*/
 
 /* --- GREEN THEME ---
 export const AppTheme = createTheme({

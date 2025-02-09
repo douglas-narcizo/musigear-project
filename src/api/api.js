@@ -2,15 +2,19 @@ const backendUrl = 'http://localhost:4000/api/';
 
 // ----- PRODUCTS functions -----
 
+const productRating = () => Math.random() * 1.5 + 3.5;
+
 export const getProductsList = async (category) => {
   const response = await fetch(`${backendUrl}products?category=${category}`);
   const json = await response.json();
+  json.forEach(product => product.rating = productRating());
   return json;  
 }
 
 export const getProduct = async (productId) => {
   const response = await fetch(`${backendUrl}products/${productId}`);
   const json = await response.json();
+  json.rating = productRating();
   return json;
 }
 
@@ -82,7 +86,6 @@ export const userLogout = async () => {
     },
   });
   const json = await response.json();
-  console.log(json);
   return json;
 };
 

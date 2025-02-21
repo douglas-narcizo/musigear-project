@@ -5,7 +5,12 @@ const backendUrl = 'http://localhost:4000/api/';
 const productRating = () => Math.random() * 1.5 + 3.5;
 
 export const getProductsList = async (category) => {
-  const response = await fetch(`${backendUrl}products?category=${category}`);
+  let response;
+  if (category) {
+    response = await fetch(`${backendUrl}products?category=${category}`);
+  } else {
+    response = await fetch(`${backendUrl}products`);
+  }
   const json = await response.json();
   json.forEach(product => product.rating = productRating());
   return json;  

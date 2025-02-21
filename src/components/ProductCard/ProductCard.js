@@ -46,11 +46,25 @@ function ProductCard (props) {
             image={product.preview}
             alt={`${product.name} preview image`}
           />
+
           {/*
           <Typography variant='h6' sx={{ textAlign: 'center', fontSize: '0.9rem', bgcolor: 'primary.main', color: 'primary.contrastText', textOverflow: 'ellipsis' }}>
             PRODUCT {product.id.slice(0, 3)} – {product.category.toUpperCase()}
           </Typography>
           */}
+
+          {product.special && 
+            <Typography variant='body2'
+              sx={{
+                fontWeight: 500,
+                px: 1.5, py: '0.15rem', bgcolor: 'hsl(48 100% 63%)', borderBottomLeftRadius: '6px',
+                position: 'absolute', top: 0, right: 0
+              }}
+            >
+              Sale!
+            </Typography>
+          }
+
           <CardHeader
             title={product.name}
             titleTypographyProps={{ fontSize: '1.2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.5px', gutterBottom: true }}
@@ -67,7 +81,7 @@ function ProductCard (props) {
 
             <Price amount={product.price} sx={{ color: 'success.main' }} />
 
-            <Typography variant='body2' sx={{ color: 'primary.light', fontWeight: 500, position: 'absolute', bottom: '0.75rem', right: '1rem' }}>
+            <Typography variant='body2' sx={{ color: 'primary.light', position: 'absolute', bottom: '0.75rem', right: '1rem' }}>
               In stock: {product.stock}
             </Typography>
           </CardContent>

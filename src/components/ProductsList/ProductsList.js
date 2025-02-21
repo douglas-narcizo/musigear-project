@@ -12,6 +12,20 @@ export default function ProductsList () {
   const carouselItemsToShow = Math.floor((window.innerWidth - 240) / 280);
   const { products, category } = useContext(ProductContext);
 
+  const productDeals = (list) => {
+    return list.map((item) => (
+      item.special && (item.category === category || !category) &&
+      <ProductCard key={item.id} product={item} />
+    ));
+  };
+
+  const productsRegular = (list) => {
+    return list.map((item) => (
+      !item.special && (item.category === category || !category) &&
+      <ProductCard key={item.id} product={item} />
+    ));
+  };
+
   const productFeed = (list) => {
     return list.map((item) => (
       <ProductCard key={item.id} product={item} />
@@ -23,12 +37,12 @@ export default function ProductsList () {
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         <Typography
           variant='h6' component='h3' fontWeight='500'
-          sx={{ px: 6, py: 1, mb: 2, bgcolor: 'hsl(44 98% 70%)', borderBottom: 1 }}
+          sx={{ px: 6, py: '2px', my: 2, bgcolor: 'hsl(48 100% 63%)', borderBottom: 1, borderTop: 1 }}
         >
           Today's deals{category ? ` on ${category.toUpperCase()}:` : ':' } 
         </Typography>
         <Carousel carouselItemsToShow={carouselItemsToShow}>
-          {productFeed(products)}
+          {productDeals(products)}
         </Carousel>
       </Box>
       <Container maxWidth='xl' sx={{ px: { xs: 0, md: 1 } }} className='products-list-container'>
@@ -46,8 +60,11 @@ export default function ProductsList () {
         >
           See also:
         </Typography>
-        <Box className='products-list' sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
+        <Box className='products-list' sx={{ display: { xs: 'flex', md: 'none' }, flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
           {productFeed(products)}
+        </Box>
+        <Box className='products-list' sx={{ display: { xs: 'none', md: 'flex' }, flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
+          {productsRegular(products)}
         </Box>
       </Container>
     </Box>

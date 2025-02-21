@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import { getProductsList } from '../api/api';
+import { shuffleArray } from '../util/util';
 
 const initialState = {
   category: '',
@@ -24,19 +25,27 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const products = await getProductsList(state.category);
+      const productsList = await getProductsList(); // getProductsList(state.category);
+      const products = shuffleArray(productsList);
+      for (let i = 0; i < products.length; i++) {
+        products[i].special = i < (products.length * 0.4);
+      }
       dispatch({ type: 'SET_PRODUCTS', payload: products });
     };
 
     fetchProducts();
-  }, [state.category]);
+  }, []); // state.category, state.products
 
   const setCategory = (category) => {
     dispatch({ type: 'SET_CATEGORY', payload: category });
   };
 
+  const setProducts = (products) => {
+    dispatch({ type: 'SET_PRODUCTS', payload: products });
+  };
+
   return (
-    <ProductContext.Provider value={{ ...state, setCategory }}>
+    <ProductContext.Provider value={{ ...state, setCategory, setProducts }}>
       {children}
     </ProductContext.Provider>
   );

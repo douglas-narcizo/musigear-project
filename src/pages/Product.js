@@ -1,24 +1,26 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { getProduct } from "../api/api";
+import ProductContext from "../context/ProductContext";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import ProductDetail from "../components/ProductDetail/ProductDetail";
 
 export default function Product() {
   const { productId } = useParams();
-  const [ productDetails, setProductDetails ] = useState(null);
-
-  const fetchData = useCallback(
-    async () => {
-      const data = await getProduct(productId);
-      setProductDetails(data);
-    }
-  ,[productId]);
+  const { products, setProducts } = useContext(ProductContext);
+  const productDetails = products.find(product => product.id === productId);
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData]);
+    const fetchProduct = async () => {
+      if (!productDetails) {
+        const data = await getProduct(productId);
+        setProducts(prevProducts => [...prevProducts, data]);
+      }
+    };
+
+    fetchProduct();
+  }, [productId, productDetails, setProducts]);
 
   return (
     <Container maxWidth='lg' sx={{ mt: 4 }}>

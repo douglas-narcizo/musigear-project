@@ -8,13 +8,13 @@ const Price = ({ amount, sx }) => {
 
   return (
     <Box sx={{ display: 'flex', width: 'fit-content', ...sx }}>
-      <Typography variant='h5' fontWeight={700} sx={{ pt: '0.3rem', mr: '0.15rem', fontSize: '1.1rem' }}>
+      <Typography variant='h5' fontWeight={700} sx={{ pt: '0.3rem', mr: '0.1rem', fontSize: '1rem' }}>
         $
       </Typography>
-      <Typography variant='h5' fontWeight={500} sx={{ pt: 0, fontSize: '1.8rem' }}>
+      <Typography variant='h5' fontWeight={500} sx={{ pt: 0, fontSize: '1.6rem' }}>
         {dollars}
       </Typography>
-      <Typography variant='h5' fontWeight={700} sx={{ mt: '0.18rem', py: '1px', fontSize: '1.1rem' }}>
+      <Typography variant='h5' fontWeight={700} sx={{ mt: '0.13rem', py: '1px', fontSize: '1rem' }}>
         .{cents}
       </Typography>
     </Box>

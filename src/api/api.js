@@ -89,6 +89,7 @@ export const userLogout = async () => {
     headers: {
       'Content-type': 'application/json',
     },
+    credentials: 'include',
   });
   const json = await response.json();
   return json;
@@ -118,13 +119,15 @@ export const fetchCart = async () => {
     credentials: 'include',
   });
   if (!response.ok) {
-    throw new Error('Failed to fetch cart');
+    return {id: '', userId: '', items: []};
+    // throw new Error('Failed to fetch cart');
   }
   return response.json();
 };
 
-export const addToCart = async (itemId) => {
-  const response = await fetch(`${backendUrl}cart`, {
+export const addToCart = async (itemId, cartId = '') => {
+  const cartUrl = `${backendUrl}cart` + (cartId ? `/${cartId}` : '');
+  const response = await fetch(cartUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -138,13 +141,27 @@ export const addToCart = async (itemId) => {
   return response.json();
 };
 
-export const removeFromCart = async (itemId) => {
-  const response = await fetch(`${backendUrl}cart`, {
+export const updateCart = async (cartId) => {
+  const response = await fetch(`${backendUrl}cart/${cartId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to update cart');
+  }
+  return response.json();
+};
+
+export const removeFromCart = async (itemId, cartId, qtyToRemove) => {
+  const response = await fetch(`${backendUrl}cart/${cartId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({productId:itemId, qty:-1}),
+    body: JSON.stringify({productId:itemId, qty:(-1 * qtyToRemove)}),
     credentials: 'include',
   });
   if (!response.ok) {

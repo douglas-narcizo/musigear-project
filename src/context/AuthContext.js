@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Load user from localStorage and verify session on app start
+  // Verify user session on app start
   useEffect(() => {
     const verifyUser = async () => {
       const sessionUser = await checkLoginStatus();

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, useRef } from 'react';
-import { fetchCart, addToCart, removeFromCart } from '../api/api';
+import { fetchCart, addToCart, updateCart, removeFromCart } from '../api/api';
 import { AuthContext } from './AuthContext';
 
 export const CartContext = createContext();
@@ -8,6 +8,8 @@ export const CartProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
 
   const emptyCart = useRef({
+    id: '',
+    userId: '',
     items: [],
     itemsCount: 0,
     total: 0,
@@ -16,9 +18,55 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(emptyCart);
   const [order, setOrder] = useState(null);
 
+  // Synchronize shopping cart when user logs in
   useEffect(() => {
     const loadCart = async () => {
       try {
+        let cartData;
+        const storedCart = await JSON.parse(localStorage.getItem('cart'));
+        if (user) {
+          if (storedCart) {
+            if (!storedCart.userId) {
+              cartData = await updateCart(storedCart.id);
+            } else if (storedCart.userId === user.id) {
+              cartData = storedCart;
+            } else {
+              localStorage.removeItem('cart');
+              cartData = await fetchCart();
+            }
+          } else {
+            cartData = await fetchCart();
+          }
+        } else if (storedCart) {
+          if (storedCart.userId) {
+            localStorage.removeItem('cart');
+            cartData = emptyCart;
+          } else {
+            cartData = storedCart;
+          }
+        } else {
+          cartData = emptyCart;
+        }
+
+        setCart(cartData);
+        if (cartData.id) {
+          localStorage.setItem('cart', JSON.stringify(cartData));
+        } // else { localStorage.removeItem('cart'); }
+      } catch (error) {
+        console.error('Failed to load cart', error);
+      }
+    };
+
+    loadCart();
+
+    return () => {
+      if (cart.userId) {
+        setCart(emptyCart);
+      }
+    };
+  }, [user, emptyCart, cart.userId]);
+
+/*
         const storedCart = localStorage.getItem('cart');
         if (storedCart && !storedCart.length === 0 && !user) {
           setCart(JSON.parse(storedCart));
@@ -29,18 +77,24 @@ export const CartProvider = ({ children }) => {
           localStorage.removeItem('cart');
           // setCart(emptyCart);
         }
-      } catch (error) {
-        console.error('Failed to load cart', error);
+*/
+
+  const handleAddToCart = async (itemId) => {
+    try {
+      let cartId = '';
+      const storedCart = await JSON.parse(localStorage.getItem('cart'));
+      if (storedCart) {
+        cartId = storedCart.id;
       }
-    };
+      const updatedCart = await addToCart(itemId, cartId);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Failed to add item to cart', error);
+    }
+  };
 
-    loadCart();
-    return () => {
-      setCart(emptyCart);
-    };
-  }, [user, emptyCart]);
-
-  const handleAddToCart = async (item) => {
+  /*
     try {
       let updatedCart;
       if (user) {
@@ -53,9 +107,19 @@ export const CartProvider = ({ children }) => {
     } catch (error) {
       console.error('Failed to add item to cart', error);
     }
+  */
+  
+  const handleRemoveFromCart = async (itemId, qtyToRemove) => {
+    try {
+      const updatedCart = await removeFromCart(itemId, cart.id, qtyToRemove);
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Failed to remove item from cart', error);
+    }
   };
 
-  const handleRemoveFromCart = async (itemId) => {
+  /*
     try {
       let updatedCart;
       if (user) {
@@ -70,7 +134,7 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  /*
+
   const handleCheckout = async () => {
     try {
       const orderData = await createOrder(cart);

@@ -85,7 +85,7 @@ export default function ShoppingCart() {
                   <Incrementer
                     qty={item.qty}
                     onIncrement={() => handleAddToCart(item.productId)}
-                    onDecrement={() => handleRemoveFromCart(item.productId)}
+                    onDecrement={() => handleRemoveFromCart(item.productId, 1)}
                   />
                   <Typography variant='caption' sx={{ fontWeight: 400, color: 'grey.700' }}>
                     unit price:
@@ -93,7 +93,7 @@ export default function ShoppingCart() {
                   <Typography variant='body1' sx={{ fontWeight: 500 }} gutterBottom>
                     {currency.format(item.price)}
                   </Typography>
-                  <Button size='small' sx={{ color: 'primary.light', fontWeight: 400 }} onClick={() => handleRemoveFromCart(item.productId)}>
+                  <Button size='small' sx={{ color: 'primary.light', fontWeight: 400 }} onClick={() => handleRemoveFromCart(item.productId, item.qty)}>
                     Remove
                   </Button>
                 </Stack>

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { userLogin, userLogout, checkLoginStatus, registerUser, loginWithGoogle } from '../api/api';
+import { userLogin, userLogout, checkLoginStatus, registerUser, loginWithGoogle, loginWithFacebook } from '../api/api';
 
 export const AuthContext = createContext();
 
@@ -12,6 +12,9 @@ export const AuthProvider = ({ children }) => {
     const verifyUser = async () => {
       const sessionUser = await checkLoginStatus();
       if (sessionUser) {
+        if (!sessionUser.picture) {
+          sessionUser.picture = `https://api.dicebear.com/9.x/personas/png?seed=${sessionUser.firstName}${sessionUser.lastName}`;
+        }
         setUser(sessionUser);
         setIsAuthenticated(true);
         localStorage.setItem('user', JSON.stringify(sessionUser));
@@ -29,6 +32,9 @@ export const AuthProvider = ({ children }) => {
     try {
       const userData = await userLogin(email, password);
       if (userData) {
+        if (!userData.picture) {
+          userData.picture = `https://api.dicebear.com/9.x/personas/png?seed=${userData.firstName}${userData.lastName}`;
+        }
         localStorage.setItem('user', JSON.stringify(userData));
         setUser(userData);
         setIsAuthenticated(true);
@@ -67,6 +73,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithFacebookHandler = async () => {
+    try {
+      const userData = await loginWithFacebook();
+      if (userData) {
+        setUser(userData);
+        setIsAuthenticated(true);
+        localStorage.setItem('user', JSON.stringify(userData));
+      }
+    } catch (error) {
+      console.error('Facebook login error:', error);
+      throw error;
+    }
+  };
+
   const logout = async () => {
     localStorage.removeItem('user');
     setUser(null);
@@ -75,7 +95,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, register, loginWithGoogleHandler, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, register, loginWithGoogleHandler, loginWithFacebookHandler, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

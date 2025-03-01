@@ -1,20 +1,18 @@
 import { useContext } from 'react';
 import { CartContext } from '../../context/CartContext';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-// import { currency } from '../../util/util';
 import Price from '../Price/Price';
 import { Rating } from '@mui/material';
 
 export default function ProductDetail (props) {
   const { product } = props;
-  const { handleAddToCart, handleRemoveFromCart } = useContext(CartContext);
+  const { handleAddToCart } = useContext(CartContext);
   
   return (
     <Container sx={{ height: '70vh' }} className='product-container'>
@@ -33,37 +31,25 @@ export default function ProductDetail (props) {
           title={product.name}
           titleTypographyProps={{ fontWeight: 500 }}
           subheader={product.description}
-          subheaderTypographyProps={{ lineHeight: 1.3, height: 38, overflow: 'hidden' }}
-          sx={{ pt: 1, pb: 1, textAlign: 'left' }}
+          subheaderTypographyProps={{ lineHeight: 1.3 }} // , height: 38, overflow: 'hidden'
+          sx={{ pt: 1, pb: { xs: 1, sm: 2 }, textAlign: 'left' }}
         />
         <CardContent sx={{ pt: 0, textAlign: 'left' }}>
           <Typography variant='body2' sx={{ color: 'primary.main', fontWeight: 500, position: 'absolute', top: '70%', right: '1rem' }}>
-            Stock: {product.stock}
+            In stock: {product.stock}
           </Typography>
-          {/* <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}>
-            {currency.format(product.price)}
-            </Typography> */}
 
           <Rating name='product-rating' value={product.rating} precision={0.5} readOnly />
 
           <Price amount={product.price} sx={{ color: 'success.main', transform: 'translate(13%) scale(1.25)' }} />
-        </CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             variant='contained'
-            sx={{ width: 0.4 }}
+            sx={{ width: 0.4, height: 'fit-content', display: 'block', margin: '0 auto', mt: { xs: 0, sm: 3 } }}
             onClick={() => handleAddToCart(product.id)}
           >
             BUY
           </Button>
-          <Button
-            variant='outlined'
-            sx={{ width: 0.4, ml: 1 }}
-            onClick={() => handleRemoveFromCart(product.id)}
-          >
-            REMOVE
-          </Button>
-        </Box>
+        </CardContent>
       </Card>
     </Container>
   );

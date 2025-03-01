@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-// import GoogleIcon from '@mui/icons-material/Google';
 import { GoogleIconColor, FacebookIcon } from '../../util/CustomIcons';
 import Divider from '@mui/material/Divider';
 import './Login.css';
@@ -30,12 +29,10 @@ export default function Login() {
   };
 
   const handleGoogleLogin = () => {
-    console.log('frontend - handle google login');
     window.location.href = 'http://localhost:4000/api/user/google';
   };
 
   const handleFacebookLogin = () => {
-    console.log('frontend - handle facebook login');
     window.location.href = 'http://localhost:4000/api/user/facebook';
   };
 

@@ -48,7 +48,6 @@ export const getUser = async (userId) => {
     const json = await response.json();
     return json;
   } else {
-    console.log('User retrieving failed!');
     return null;
   }
 }
@@ -80,8 +79,15 @@ export const loginWithFacebook = async () => {
     credentials: 'include',
   });
   const json = await response.json();
+
+  // Fetch the profile picture URL using Graph API
+  const pictureResponse = await fetch(`https://graph.facebook.com/${json.id}/picture?type=large&redirect=false`, {
+    method: 'GET',
+  });
+  const pictureData = await pictureResponse.json();
+  json.picture = pictureData.data.is_silhouette ? `https://api.dicebear.com/9.x/personas/png?seed=${json.firstName}${json.lastName}` : pictureData.data.url;
   return json;
-}
+};
 
 export const userLogout = async () => {
   const response = await fetch(`${backendUrl}user/logout`, {

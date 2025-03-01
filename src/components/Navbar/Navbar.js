@@ -8,11 +8,12 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
-import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
 import './Navbar.css';
 
 const categories = [
@@ -70,7 +71,12 @@ function Navbar() {
           </IconButton>
 
           {user ?
-            <Button sx={{ color: 'primary.contrastText', ml: 1 }} onClick={() => handleNavigation('/user')}>
+            <Button sx={{ color: 'primary.contrastText', ml: { xs: 0, md: 1 } }} onClick={() => handleNavigation('/user')}>
+              <Avatar
+                alt={`${user.firstName} ${user.lastName}`} 
+                src={user.picture}
+                sx={{ mr: 1.5, height: '2rem', width: '2rem', border: 0.5, bgcolor: 'grey.300' }}
+              />
               {user.firstName}
             </Button>
           :

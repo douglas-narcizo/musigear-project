@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# MusiGear
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **MusiGear**, an e-commerce application dedicated to music lovers and their favorite gear. This project was developed as a Portfolio Project, as part of the **Full Stack Engineer** career path at **Codecademy**.
+
+## About the Project
+
+MusiGear is an online store where users can browse and purchase a variety of musical instruments and related equipment. The application showcases a wide range of products, including guitars, basses, drums, keyboards, brass instruments, microphones, pro audio equipment, and accessories.
+
+## Tech Stack
+
+MusiGear is built upon the **PERN** stack, which stands for:
+
+- **PostgreSQL**: A powerful, open-source object-relational database system.
+- **Express.js**: A minimal and flexible Node.js web application framework.
+- **React**: A JavaScript library for building user interfaces.
+- **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine.
+
+## Features
+
+- **User Authentication**: Users can register, log in, and log out. Authentication is handled securely with sessions.
+- **Product Browsing**: Users can browse products by category, view product details, and see special deals.
+- **Shopping Cart**: Users can add products to their cart, update quantities, and remove items.
+- **Checkout**: Users can proceed to checkout and complete their purchase using a test payment gateway.
+- **Order Management**: Users can view their order details after completing a purchase.
+
+## Getting Started
+
+To get started with MusiGear, follow these steps:
+
+1. **Clone the repository**:
+    ```sh
+    git clone https://github.com/your-username/musigear.git
+    cd musigear
+    ```
+
+2. **Install dependencies**:
+    ```sh
+    npm install
+    ```
+
+3. **Set up the database**:
+    - Ensure you have PostgreSQL installed and running.
+    - Create a new database and update the connection settings in the `server/config.js` file.
+
+4. **Run the development server**:
+    ```sh
+    npm start
+    ```
+
+5. **Open the application**:
+    - Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **`npm start`**: Runs the app in development mode.
+- **`npm test`**: Launches the test runner in interactive watch mode.
+- **`npm run build`**: Builds the app for production to the `build` folder.
+- **`npm run eject`**: Ejects the app, giving you full control over the configuration.
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+To learn more about the technologies used in this project, check out the following resources:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [React Documentation](https://reactjs.org/)
+- [Express.js Documentation](https://expressjs.com/)
+- [Node.js Documentation](https://nodejs.org/)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
 
-### Code Splitting
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-### Analyzing the Bundle Size
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Douglas Narcizo**
 
-### Making a Progressive Web App
+Feel free to reach out if you have any questions or feedback!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for checking out MusiGear! We hope you enjoy exploring the app as much as we enjoyed building it.

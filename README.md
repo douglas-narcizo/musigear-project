@@ -42,12 +42,14 @@ To get started with MusiGear, follow these steps:
     - Ensure you have PostgreSQL installed and running.
     - Create a new database and update the connection settings in the `server/config.js` file.
 
-4. **Run the development server**:
+4. **Create a `.env` file** in the root directory with the necessary environment variables. Refer to the provided `EXAMPLE.env` to structure yours. The back-end API is pre-configured to run at port `4000`.
+
+5. **Run the development server**:
     ```sh
     npm start
     ```
 
-5. **Open the application**:
+6. **Open the application**:
     - Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Available Scripts
@@ -80,4 +82,4 @@ Feel free to reach out if you have any questions or feedback!
 
 ---
 
-Thank you for checking out MusiGear! We hope you enjoy exploring the app as much as we enjoyed building it.
+Thank you for checking out MusiGear! I hope you enjoy exploring the app as much as I enjoyed building it.

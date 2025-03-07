@@ -14,27 +14,17 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Badge from '@mui/material/Badge';
 import Avatar from '@mui/material/Avatar';
+import { categories } from '../../context/categories';
 import './Navbar.css';
-
-const categories = [
-  {name:'All categories', path:'/'},
-  {name:'Guitars', path:'/?category=Guitars'},
-  {name:'Bass', path:'/?category=Bass'},
-  {name:'Drums', path:'/?category=Drums'},
-  {name:'Brass', path:'/?category=Brass'},
-  {name:'Microphones', path:'/?category=Microphones'},
-  {name:'Pro Audio', path:'/?category=Pro Audio'},
-  {name:'Accessories', path:'/?category=Accessories'},
-];
 
 function Navbar() {
   const { user } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
-  const { category, setCategory } = useContext(ProductContext);
+  const { category } = useContext(ProductContext);
   const navigate = useNavigate();
 
   const handleNavigation = (path, catName) => {
-    setCategory(catName);
+  //  setCategory(catName);
     navigate(path);
   }
   
@@ -93,7 +83,7 @@ function Navbar() {
           <Box component='nav' sx={{ m: 0, display: 'flex', overflow: 'auto' }}>
             {categories.map((cat) => (
               <Button
-                key={cat.name}
+                key={cat.title}
                 size='large'
                 fontWeight='500'
                 sx={{ px: 2, color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
@@ -104,7 +94,7 @@ function Navbar() {
                 }}
                 onClick={() => handleNavigation(cat.path)}
               >
-                {cat.name}
+                {cat.title}
               </Button>
             ))}
           </Box>
@@ -116,7 +106,7 @@ function Navbar() {
           <Box component='nav' sx={{ display: 'flex', overflow: 'auto' }}>
             {categories.map((cat) => (
               <Button
-                key={cat.name}
+                key={cat.title}
                 size='small'
                 fontWeight='500'
                 sx={{ p: '0.2rem 0', color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
@@ -128,7 +118,7 @@ function Navbar() {
                 }}
                 onClick={() => handleNavigation(cat.path)}
               >
-                {cat.name}
+                {cat.title}
               </Button>
             ))}
           </Box>

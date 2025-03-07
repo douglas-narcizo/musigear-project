@@ -23,7 +23,21 @@ export default function ProductDetail (props) {
           width='100%'
           image={product.preview}
           alt={`${product.name} preview image`}
+          referrerPolicy='no-referrer'
         />
+        {product.special && 
+          <Typography variant='body1'
+            sx={{
+              fontWeight: 500,
+              fontSize: '18px',
+              px: 5, pb: '0.15rem', pt: 4, bgcolor: 'hsl(100 100% 60%)', // borderBottomLeftRadius: '6px',
+              position: 'absolute', top: 0, right: 0,
+              transform: 'rotate(45deg) translate(21px, -42px)'
+            }}
+          >
+            Deal!
+          </Typography>
+        }
         <Typography variant='h6' sx={{ fontSize: 14, bgcolor: 'primary.main', color: 'primary.contrastText', textAlign: 'center' }}>
           PRODUCT {product.id.slice(0, 3)} – {product.category.toUpperCase()}
         </Typography>

@@ -45,23 +45,20 @@ function ProductCard (props) {
             sx={{ height: '16rem' /*, width: '100%'*/ }}
             image={product.preview}
             alt={`${product.name} preview image`}
+            referrerPolicy='no-referrer'
           />
-
-          {/*
-          <Typography variant='h6' sx={{ textAlign: 'center', fontSize: '0.9rem', bgcolor: 'primary.main', color: 'primary.contrastText', textOverflow: 'ellipsis' }}>
-            PRODUCT {product.id.slice(0, 3)} – {product.category.toUpperCase()}
-          </Typography>
-          */}
 
           {product.special && 
             <Typography variant='body2'
               sx={{
                 fontWeight: 500,
-                px: 1.5, py: '0.15rem', bgcolor: 'hsl(48 100% 63%)', borderBottomLeftRadius: '6px',
-                position: 'absolute', top: 0, right: 0
+                fontSize: '13px',
+                px: 5, pb: '0.15rem', pt: 4, bgcolor: 'hsl(100 100% 60%)', // borderBottomLeftRadius: '6px',
+                position: 'absolute', top: 0, right: 0,
+                transform: 'rotate(45deg) translate(21px, -48px)'
               }}
             >
-              Sale!
+              Deal!
             </Typography>
           }
 

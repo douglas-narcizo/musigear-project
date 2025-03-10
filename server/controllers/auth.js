@@ -37,7 +37,7 @@ module.exports = (passport) => {
     new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'http://localhost:4000/api/user/google/callback'
+      callbackURL: `${process.env.BACKEND_URL}/api/user/google/callback`
     },
     async (token, tokenSecret, profile, done) => {
       try {
@@ -52,7 +52,7 @@ module.exports = (passport) => {
     new FacebookStrategy({
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:4000/api/user/facebook/callback',
+      callbackURL: `${process.env.BACKEND_URL}/api/user/facebook/callback`,
       profileFields: ['id', 'name', 'picture', 'email'],
     },
     async (accessToken, refreshToken, profile, done) => {

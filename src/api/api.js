@@ -1,4 +1,4 @@
-const backendUrl = 'http://localhost:4000/api/';
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:4000/api/';
 
 // ----- PRODUCTS functions -----
 

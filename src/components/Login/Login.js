@@ -29,11 +29,11 @@ export default function Login() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:4000/api/user/google';
+    window.location.href = `${process.env.REACT_APP_BACKEND_URL}/user/google`;
   };
 
   const handleFacebookLogin = () => {
-    window.location.href = 'http://localhost:4000/api/user/facebook';
+    window.location.href = `${process.env.REACT_APP_BACKEND_URL}/user/facebook`;
   };
 
   return (

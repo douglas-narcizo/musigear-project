@@ -7,9 +7,9 @@ const productRating = () => Math.random() * 1.5 + 3.5;
 export const getProductsList = async (category) => {
   let response;
   if (category) {
-    response = await fetch(`${backendUrl}products?category=${category}`);
+    response = await fetch(`${backendUrl}/products?category=${category}`);
   } else {
-    response = await fetch(`${backendUrl}products`);
+    response = await fetch(`${backendUrl}/products`);
   }
   const json = await response.json();
   json.forEach(product => product.rating = productRating());
@@ -17,7 +17,7 @@ export const getProductsList = async (category) => {
 }
 
 export const getProduct = async (productId) => {
-  const response = await fetch(`${backendUrl}products/${productId}`);
+  const response = await fetch(`${backendUrl}/products/${productId}`);
   const json = await response.json();
   json.rating = productRating();
   return json;
@@ -26,7 +26,7 @@ export const getProduct = async (productId) => {
 // ----- USERS functions -----
 
 export const userLogin = async (email, password) => {
-  const response = await fetch(`${backendUrl}user/login`, {
+  const response = await fetch(`${backendUrl}/user/login`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -40,7 +40,7 @@ export const userLogin = async (email, password) => {
 
 export const getUser = async (userId) => {
   if (userId) {
-    const response = await fetch(`${backendUrl}user/`, {
+    const response = await fetch(`${backendUrl}/user/`, {
       method: 'GET',
       body: JSON.stringify(userId),
       credentials: 'include',
@@ -53,7 +53,7 @@ export const getUser = async (userId) => {
 }
 
 export const registerUser = async (email, password, firstName, lastName) => {
-  const response = await fetch(`${backendUrl}user/register`, {
+  const response = await fetch(`${backendUrl}/user/register`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -65,7 +65,7 @@ export const registerUser = async (email, password, firstName, lastName) => {
 }
 
 export const loginWithGoogle = async () => {
-  const response = await fetch(`${backendUrl}user/google`, {
+  const response = await fetch(`${backendUrl}/user/google`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -74,7 +74,7 @@ export const loginWithGoogle = async () => {
 }
 
 export const loginWithFacebook = async () => {
-  const response = await fetch(`${backendUrl}user/facebook`, {
+  const response = await fetch(`${backendUrl}/user/facebook`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -90,7 +90,7 @@ export const loginWithFacebook = async () => {
 };
 
 export const userLogout = async () => {
-  const response = await fetch(`${backendUrl}user/logout`, {
+  const response = await fetch(`${backendUrl}/user/logout`, {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
@@ -103,7 +103,7 @@ export const userLogout = async () => {
 
 export const checkLoginStatus = async () => {
   try {
-    const response = await fetch(`${backendUrl}user/verify-session`, {
+    const response = await fetch(`${backendUrl}/user/verify-session`, {
       method: 'GET',
       credentials: 'include',
     });
@@ -121,7 +121,7 @@ export const checkLoginStatus = async () => {
 // ----- CART functions -----
 
 export const fetchCart = async () => {
-  const response = await fetch(`${backendUrl}cart`, {
+  const response = await fetch(`${backendUrl}/cart`, {
     credentials: 'include',
   });
   if (!response.ok) {
@@ -132,7 +132,7 @@ export const fetchCart = async () => {
 };
 
 export const addToCart = async (itemId, cartId = '') => {
-  const cartUrl = `${backendUrl}cart` + (cartId ? `/${cartId}` : '');
+  const cartUrl = `${backendUrl}/cart` + (cartId ? `/${cartId}` : '');
   const response = await fetch(cartUrl, {
     method: 'POST',
     headers: {
@@ -148,7 +148,7 @@ export const addToCart = async (itemId, cartId = '') => {
 };
 
 export const updateCart = async (cartId) => {
-  const response = await fetch(`${backendUrl}cart/${cartId}`, {
+  const response = await fetch(`${backendUrl}/cart/${cartId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -162,7 +162,7 @@ export const updateCart = async (cartId) => {
 };
 
 export const removeFromCart = async (itemId, cartId, qtyToRemove) => {
-  const response = await fetch(`${backendUrl}cart/${cartId}`, {
+  const response = await fetch(`${backendUrl}/cart/${cartId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ export const removeFromCart = async (itemId, cartId, qtyToRemove) => {
 // ----- CHECKOUT functions -----
 
 export const createOrder = async (cart) => {
-  const response = await fetch(`${backendUrl}cart/${cart.id}/checkout`, {
+  const response = await fetch(`${backendUrl}/cart/${cart.id}/checkout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ export const createOrder = async (cart) => {
 };
 
 export const createPaymentIntent = async (items) => {
-  const response = await fetch(`${backendUrl}order/create-payment-intent`, {
+  const response = await fetch(`${backendUrl}/order/create-payment-intent`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

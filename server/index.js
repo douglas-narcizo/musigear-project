@@ -5,6 +5,7 @@ const cors = require('cors');
 const session = require('express-session');
 const setupSwagger = require('./swagger');
 const passport = require('passport');
+const helmet = require('helmet');
 require('./controllers/auth')(passport);
 
 require('dotenv').config();
@@ -35,6 +36,21 @@ app.use(cors({
     }
   },
   credentials: true,
+}));
+
+// Configure helmet for CSP
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://checkout.stripe.com", "https://js.stripe.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "https://*.stripe.com"],
+      connectSrc: ["'self'", "https://*.stripe.com", process.env.BACKEND_URL],
+      frameSrc: ["'self'", "https://js.stripe.com"],
+    },
+  },
 }));
 
 // Configure session

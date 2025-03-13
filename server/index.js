@@ -68,10 +68,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/api/user', userRouter);
-app.use('/api/products', productRouter);
-app.use('/api/cart', cartRouter);
-app.use('/api/order', orderRouter);
+app.use('/user', userRouter);
+app.use('/products', productRouter);
+app.use('/cart', cartRouter);
+app.use('/order', orderRouter);
+
+app.get('/health', (req, res) => { 
+  res.sendStatus(200); 
+});
 
 setupSwagger(app);
 

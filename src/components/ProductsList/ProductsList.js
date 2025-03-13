@@ -28,6 +28,7 @@ export default function ProductsList () {
 
   const productFeed = (list) => {
     return list.map((item) => (
+      (item.category === category || !category) &&
       <ProductCard key={item.id} product={item} />
     ));
   };

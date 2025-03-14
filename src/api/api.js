@@ -40,7 +40,7 @@ export const userLogin = async (email, password) => {
 
 export const getUser = async (userId) => {
   if (userId) {
-    const response = await fetch(`${backendUrl}/user/`, {
+    const response = await fetch(`${backendUrl}/user`, {
       method: 'GET',
       body: JSON.stringify(userId),
       credentials: 'include',

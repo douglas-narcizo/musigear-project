@@ -15,9 +15,8 @@ import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
 import Navbar from "./components/Navbar/Navbar";
-// import ResponsiveAppBar from "./components/ProductDetail/ProductDetail";
 
-const stripePromise = loadStripe('pk_test_51QlI9yRgNuMY1fihqX5acVzEjnRKripdrBaolIcd1gSVQBigCCOd1sLmeQMuQ0XOTsSH2X7kPeRf6Yo4MM7CtO6y00IbUf45wX');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 export default function App() {
   
@@ -37,18 +36,3 @@ export default function App() {
     </Router>
   );
 }
-
-/*
-    <div className="App">
-      <header className="App-header">
-        MusiGear
-      </header>
-      <main>
-        Hello Baby!!
-        <ProductsList products={testList}/>
-      </main>
-      <footer>
-        Meu pé, meu querido pé
-      </footer>
-    </div>
-*/

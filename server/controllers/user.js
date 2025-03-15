@@ -4,6 +4,12 @@ const bcrypt = require('bcryptjs');
 const register = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
   try {
+    // Check if the email already exists
+    const emailCheck = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ error: 'Email already in use' });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     const newUser = await pool.query(`

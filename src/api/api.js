@@ -7,9 +7,13 @@ const productRating = () => Math.random() * 1.5 + 3.5;
 export const getProductsList = async (category) => {
   let response;
   if (category) {
-    response = await fetch(`${backendUrl}/products?category=${category}`);
+    response = await fetch(`${backendUrl}/products?category=${category}`, {
+      credentials: 'include',
+    });
   } else {
-    response = await fetch(`${backendUrl}/products`);
+    response = await fetch(`${backendUrl}/products`, {
+      credentials: 'include',
+    });
   }
   const json = await response.json();
   json.forEach(product => product.rating = productRating());
@@ -17,7 +21,9 @@ export const getProductsList = async (category) => {
 }
 
 export const getProduct = async (productId) => {
-  const response = await fetch(`${backendUrl}/products/${productId}`);
+  const response = await fetch(`${backendUrl}/products/${productId}`, {
+    credentials: 'include',
+  });
   const json = await response.json();
   json.rating = productRating();
   return json;
@@ -58,11 +64,18 @@ export const registerUser = async (email, password, firstName, lastName) => {
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(email, password, firstName, lastName),
+    body: JSON.stringify({ email, password, firstName, lastName }),
+    credentials: 'include', // Include credentials in the request
   });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error);
+  }
+
   const json = await response.json();
   return json;
-}
+};
 
 export const loginWithGoogle = async () => {
   const response = await fetch(`${backendUrl}/user/google`, {

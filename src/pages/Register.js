@@ -40,9 +40,13 @@ export default function Register() {
     }
     setError('');
 
-    await register({ email, password, firstName, lastName });
-    await login(email, password); // Log in user after registration
-    navigate('/user');
+    try {
+      await register({ email, password, firstName, lastName });
+      await login(email, password); // Log in user after registration
+      navigate('/user');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (

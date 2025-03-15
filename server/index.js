@@ -60,7 +60,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false,
+      secure: true, // Ensure the cookie is only sent over HTTPS
+      sameSite: 'None', // Allow cross-site cookies
       maxAge: 24 * 60 * 60 * 1000,
     },
   })

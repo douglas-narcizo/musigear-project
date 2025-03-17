@@ -45,12 +45,20 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://checkout.stripe.com", "https://js.stripe.com"],
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://checkout.stripe.com",
+        "https://js.stripe.com",
+        "https://apis.google.com",
+        "https://accounts.google.com",
+        "https://connect.facebook.net"
+      ],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https://*.stripe.com"],
-      connectSrc: ["'self'", "https://*.stripe.com", process.env.BACKEND_URL],
-      frameSrc: ["'self'", "https://js.stripe.com"],
+      imgSrc: ["'self'", "data:", "https://*.stripe.com", "https://*.googleusercontent.com", "https://*.fbcdn.net"],
+      connectSrc: ["'self'", "https://*.stripe.com", process.env.BACKEND_URL, "https://accounts.google.com", "https://graph.facebook.com"],
+      frameSrc: ["'self'", "https://js.stripe.com", "https://accounts.google.com", "https://connect.facebook.net"],
     },
   },
 }));

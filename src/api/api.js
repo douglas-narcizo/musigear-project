@@ -64,7 +64,7 @@ export const registerUser = async (email, password, firstName, lastName) => {
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({ email, password, firstName, lastName }),
+    body: JSON.stringify(email, password, firstName, lastName),
     credentials: 'include', // Include credentials in the request
   });
 

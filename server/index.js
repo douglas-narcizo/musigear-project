@@ -3,12 +3,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
 require('./controllers/auth')(passport);
 
 require('dotenv').config();
-const { PORT, SESSION_SECRET } = require('./config');
+const { PORT, SESSION_SECRET, DATABASE_URL } = require('./config');
 
 // Routers imports
 const userRouter = require('./routes/user');
@@ -51,7 +52,7 @@ app.use(cors({
     },
   },
 }));
- */
+*/
 
 //  Manually configure CSP
 app.use((req, res, next) => {
@@ -65,6 +66,9 @@ app.use((req, res, next) => {
 // Configure session
 app.use(
   session({
+    store: new pgSession({
+      conString: DATABASE_URL,
+    }),
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

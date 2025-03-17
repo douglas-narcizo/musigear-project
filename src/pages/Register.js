@@ -24,8 +24,13 @@ export default function Register() {
   };
 
   const validatePassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return regex.test(password);
+    try {
+      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+      return regex.test(password);
+    } catch (err) {
+      console.error('Error validating password:', err);
+      return false;
+    }
   };
 
   const handleSubmit = async (e) => {

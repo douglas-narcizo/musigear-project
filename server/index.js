@@ -7,6 +7,7 @@ const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
 require('./controllers/auth')(passport);
+const { pool } = require('./db'); // Import the pool instance
 
 require('dotenv').config();
 const { PORT, SESSION_SECRET, DATABASE_URL } = require('./config');
@@ -67,7 +68,7 @@ app.use((req, res, next) => {
 app.use(
   session({
     store: new pgSession({
-      conString: DATABASE_URL,
+      pool: pool, // Use the imported pool instance
     }),
     secret: SESSION_SECRET,
     resave: false,
@@ -76,7 +77,7 @@ app.use(
       secure: true, // Ensure the cookie is only sent over HTTPS
       sameSite: 'None', // Allow cross-site cookies
       domain: '.musigear.com', // Share cookie across subdomains
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
 );

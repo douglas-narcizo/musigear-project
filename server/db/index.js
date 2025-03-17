@@ -8,5 +8,7 @@ const pool = new Pool({
 });
 
 module.exports = {
-  query: (text, params) => pool.query(text, params)
+  query: (text, params) => pool.query(text, params),
+  connect: () => pool.connect(),
+  pool // Export the pool instance
 };

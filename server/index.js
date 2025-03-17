@@ -5,7 +5,6 @@ const cors = require('cors');
 const session = require('express-session');
 const setupSwagger = require('./swagger');
 const passport = require('passport');
-const helmet = require('helmet');
 require('./controllers/auth')(passport);
 
 require('dotenv').config();
@@ -39,7 +38,7 @@ app.use(cors({
 }));
 
 // Configure helmet for CSP
-app.use(helmet({
+/* app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -52,6 +51,16 @@ app.use(helmet({
     },
   },
 }));
+ */
+
+//  Manually configure CSP
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; script-src 'self' https://js.stripe.com https://checkout.stripe.com process.env.BACKEND_URL; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.stripe.com; connect-src 'self' https://*.stripe.com process.env.BACKEND_URL; frame-src 'self' https://js.stripe.com;"
+  );
+  next();
+});
 
 // Configure session
 app.use(
@@ -62,6 +71,7 @@ app.use(
     cookie: {
       secure: true, // Ensure the cookie is only sent over HTTPS
       sameSite: 'None', // Allow cross-site cookies
+      domain: '.musigear.com', // Share cookie across subdomains
       maxAge: 24 * 60 * 60 * 1000,
     },
   })

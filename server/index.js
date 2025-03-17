@@ -40,7 +40,7 @@ app.use(cors({
 }));
 
 // Configure helmet for CSP
-/* app.use(helmet({
+app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -53,17 +53,16 @@ app.use(cors({
     },
   },
 }));
-*/
 
 //  Manually configure CSP
-app.use((req, res, next) => {
+/* app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
     "default-src 'self'; script-src 'self' https://js.stripe.com https://checkout.stripe.com process.env.BACKEND_URL; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.stripe.com; connect-src 'self' https://*.stripe.com process.env.BACKEND_URL; frame-src 'self' https://js.stripe.com;"
   );
   next();
 });
-
+ */
 // Configure session
 app.use(
   session({

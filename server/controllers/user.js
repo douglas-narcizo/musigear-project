@@ -46,7 +46,7 @@ const getOneById = async (req, res) => {
   }
 }
 
-const getOneByGoogleId = async (profile, done) => {
+const getOneByGoogleId = async (token, tokenSecret, profile, done) => {
   try {
     const result = await pool.query(`
       SELECT id, email, first_name AS "firstName", last_name AS "lastName", picture
@@ -79,7 +79,7 @@ const getOneByGoogleId = async (profile, done) => {
   }
 };
 
-const getOneByFacebookId = async (profile, done) => {
+const getOneByFacebookId = async (accessToken, refreshToken, profile, done) => {
   try {
     const result = await pool.query(`
       SELECT id, email, first_name AS "firstName", last_name AS "lastName", picture

@@ -83,6 +83,7 @@ export const loginWithGoogle = async () => {
     credentials: 'include',
   });
   const json = await response.json();
+  console.log(json, 'user json');
   return json;
 }
 
@@ -92,6 +93,7 @@ export const loginWithFacebook = async () => {
     credentials: 'include',
   });
   const json = await response.json();
+  console.log(json, 'user json');
 
   // Fetch the profile picture URL using Graph API
   const pictureResponse = await fetch(`https://graph.facebook.com/${json.id}/picture?type=large&redirect=false`, {

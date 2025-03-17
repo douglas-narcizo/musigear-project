@@ -6,6 +6,7 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
+const helmet = require('helmet');
 require('./controllers/auth')(passport);
 const { pool } = require('./db'); // Import the pool instance
 

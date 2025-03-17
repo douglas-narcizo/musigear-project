@@ -84,6 +84,9 @@ export const loginWithGoogle = async () => {
   });
   const json = await response.json();
   console.log(json, 'user json');
+  setTimeout(() => {
+    console.log('user json after 10 seconds:');
+  }, 10000);
   return json;
 }
 

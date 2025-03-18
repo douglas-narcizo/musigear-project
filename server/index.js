@@ -3,12 +3,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
+const { Pool } = require('pg');
 const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
 const helmet = require('helmet');
 require('./controllers/auth')(passport);
-const { pool } = require('./db'); // Import the pool instance
+// const { pool } = require('./db'); // Import the pool instance
 
 require('dotenv').config();
 const { PORT, SESSION_SECRET, DATABASE_URL } = require('./config');
@@ -75,15 +76,20 @@ app.use(helmet({
 // Configure session
 app.use(
   session({
-/*     store: new pgSession({
-      pool: pool, // Use the imported pool instance
-    }), */
+    store: new pgSession({
+      pool: new Pool({
+        connectionString: DATABASE_URL,
+        ssl: {
+          rejectUnauthorized: false
+        }
+      }),
+    }),
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
       secure: true, // Ensure the cookie is only sent over HTTPS
-      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+//      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
       sameSite: 'Lax', // Protect against CSRF
       domain: '.musigear.com', // Share cookie across subdomains
       maxAge: 24 * 60 * 60 * 1000, // 1 day
@@ -104,7 +110,7 @@ app.get('/health', (req, res) => {
 
 // render index.html for root URL
 app.use(express.static('public'));
-app.use(passport.authenticate('session'));
+// app.use(passport.authenticate('session'));
 
 setupSwagger(app);
 

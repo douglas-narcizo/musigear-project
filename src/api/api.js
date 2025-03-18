@@ -83,10 +83,7 @@ export const loginWithGoogle = async () => {
     credentials: 'include',
   });
   const json = await response.json();
-  console.log(json, 'user json');
-  setTimeout(() => {
-    console.log('user json after 10 seconds:');
-  }, 10000);
+  console.log('frontend loginWithGoogle', json);
   return json;
 }
 
@@ -96,7 +93,7 @@ export const loginWithFacebook = async () => {
     credentials: 'include',
   });
   const json = await response.json();
-  console.log(json, 'user json');
+  console.log('frontend loginWithFacebook', json);
 
   // Fetch the profile picture URL using Graph API
   const pictureResponse = await fetch(`https://graph.facebook.com/${json.id}/picture?type=large&redirect=false`, {

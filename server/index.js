@@ -20,6 +20,8 @@ const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
 
+app.enable('trust proxy');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -85,8 +87,8 @@ app.use(
     cookie: {
       secure: true, // Ensure the cookie is only sent over HTTPS
       httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-      sameSite: 'Lax', // Protect against CSRF
-      domain: '.musigear.com', // Share cookie across subdomains
+//      sameSite: 'None',
+//      domain: '.musigear.com', // Share cookie across subdomains
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })

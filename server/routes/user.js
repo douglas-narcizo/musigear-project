@@ -64,10 +64,24 @@ userRouter.route('/register')
  */
 
 // Login User
-userRouter.route('/login')
+/* userRouter.route('/login')
 .post( passport.authenticate('local'),
   (req, res) => {
     res.status(200).json(req.user);
+}); */
+
+userRouter.route('/login')
+.post( passport.authenticate('local', { failureRedirect: '/login' }),
+  (req, res) => {
+    req.login(req.user, (err) => {
+      if (err) {
+        console.error("Error during req.login:", err);
+        return res.status(500).send("Login error");
+      }
+      console.log("User logged in:", req.user); // Check req.user
+      console.log("Session before response:", req.session); // Added log
+      res.redirect('/');
+    });
 });
 
 /**

@@ -7,7 +7,7 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 require('./controllers/auth')(passport);
 const { pool } = require('./db'); // Import the pool instance
 
@@ -23,26 +23,13 @@ const orderRouter = require('./routes/order');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'https://checkout.stripe.com',
-  'https://stripe.com',
-  'https://stripe.network'
-];
-
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 
 // Configure helmet for CSP
-app.use(helmet({
+/* app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
@@ -62,17 +49,17 @@ app.use(helmet({
       frameSrc: ["'self'", "https://js.stripe.com", "https://accounts.google.com", "https://www.facebook.com", "https://connect.facebook.net"],
     },
   },
-}));
+})); */
 
 //  Manually configure CSP
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' https://js.stripe.com https://checkout.stripe.com process.env.BACKEND_URL; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.stripe.com; connect-src 'self' https://*.stripe.com process.env.BACKEND_URL; frame-src 'self' https://js.stripe.com;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://apis.google.com https://accounts.google.com https://connect.facebook.net process.env.BACKEND_URL; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.stripe.com https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com; connect-src 'self' https://*.stripe.com process.env.BACKEND_URL https://accounts.google.com https://graph.facebook.com; frame-src 'self' https://js.stripe.com https://accounts.google.com https://www.facebook.com https://connect.facebook.net;"
   );
   next();
 });
- */
+
 // Configure session
 app.use(
   session({
@@ -103,9 +90,13 @@ app.get('/health', (req, res) => {
   res.sendStatus(200); 
 });
 
+app.get('/test-session', (req, res) => {
+  req.session.test = 'test value';
+  res.send('Session set');
+});
+
 // render index.html for root URL
 app.use(express.static('public'));
-// app.use(passport.authenticate('session'));
 
 setupSwagger(app);
 

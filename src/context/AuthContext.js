@@ -67,9 +67,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         localStorage.setItem('user', JSON.stringify(userData));
         console.log(userData, 'user data');
-        setTimeout(() => {
-          console.log('user data after 10 seconds:');
-        }, 10000);
       }
     } catch (error) {
       console.error('Google login error:', error);

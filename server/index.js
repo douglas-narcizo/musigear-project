@@ -3,13 +3,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const session = require('express-session');
-const { Pool } = require('pg');
+// const { Pool } = require('pg');
 const pgSession = require('connect-pg-simple')(session);
 const setupSwagger = require('./swagger');
 const passport = require('passport');
 const helmet = require('helmet');
 require('./controllers/auth')(passport);
-// const { pool } = require('./db'); // Import the pool instance
+const { pool } = require('./db'); // Import the pool instance
 
 require('dotenv').config();
 const { PORT, SESSION_SECRET, DATABASE_URL } = require('./config');
@@ -77,12 +77,7 @@ app.use(helmet({
 app.use(
   session({
     store: new pgSession({
-      pool: new Pool({
-        connectionString: DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false
-        }
-      }),
+      pool: pool,
     }),
     secret: SESSION_SECRET,
     resave: false,

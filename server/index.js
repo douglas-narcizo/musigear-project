@@ -56,9 +56,9 @@ app.use(helmet({
       ],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:", "https://*.stripe.com", "https://*.googleusercontent.com", "https://*.fbcdn.net"],
+      imgSrc: ["'self'", "data:", "https://*.stripe.com", "https://*.googleusercontent.com", "https://*.fbcdn.net", "https://platform-lookaside.fbsbx.com"],
       connectSrc: ["'self'", "https://*.stripe.com", process.env.BACKEND_URL, "https://accounts.google.com", "https://graph.facebook.com"],
-      frameSrc: ["'self'", "https://js.stripe.com", "https://accounts.google.com", "https://connect.facebook.net"],
+      frameSrc: ["'self'", "https://js.stripe.com", "https://accounts.google.com", "https://www.facebook.com", "https://connect.facebook.net"],
     },
   },
 }));
@@ -83,8 +83,9 @@ app.use(
     saveUninitialized: false,
     cookie: {
       secure: true, // Ensure the cookie is only sent over HTTPS
-      sameSite: 'None', // Allow cross-site cookies
-      domain: '.musigear.com', // Share cookie across subdomains
+      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+      sameSite: 'Lax', // Protect against CSRF
+      // domain: '.musigear.com', // Share cookie across subdomains
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })

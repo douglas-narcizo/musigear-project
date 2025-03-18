@@ -26,6 +26,7 @@ const register = async (req, res) => {
 
 const getOneById = async (req, res) => {
   const { userId } = req.body;
+  console.log('backend getOneById req.user:', req.user);
   if (req.user && req.user.id == userId) {
     try {
       const result = await pool.query(`
@@ -42,6 +43,7 @@ const getOneById = async (req, res) => {
       res.status(400).json({ message: err.message });
     }      
   } else {
+    console.log('backend getOneById 400', req.user);
     res.status(400).json({ message: 'Please login first!' });
   }
 }
@@ -69,9 +71,11 @@ const getOneByGoogleId = async (token, tokenSecret, profile, done) => {
         RETURNING id, email, first_name AS "firstName", last_name AS "lastName", picture`,
         [profileData, profileData.email, profileData.firstName, profileData.lastName, profileData.picture]);
 
+      console.log('backend Google: New user created:', newUser.rows[0]);
       return done(null, newUser.rows[0]);
     } else {
       // User found, return the user
+      console.log('backend Google: User found:', result.rows[0]);
       return done(null, result.rows[0]);
     }
   } catch (err) {
@@ -102,9 +106,11 @@ const getOneByFacebookId = async (accessToken, refreshToken, profile, done) => {
         RETURNING id, email, first_name AS "firstName", last_name AS "lastName", picture`,
         [profileData, profileData.email, profileData.firstName, profileData.lastName, profileData.picture]);
 
+      console.log('backend FB: New user created:', newUser.rows[0]);
       return done(null, newUser.rows[0]);
     } else {
       // User found, return the user
+      console.log('backend FB: User found:', result.rows[0]);
       return done(null, result.rows[0]);
     }
   } catch (err) {

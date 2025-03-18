@@ -75,9 +75,9 @@ app.use(helmet({
 // Configure session
 app.use(
   session({
-    store: new pgSession({
+/*     store: new pgSession({
       pool: pool, // Use the imported pool instance
-    }),
+    }), */
     secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,

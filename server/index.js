@@ -102,10 +102,11 @@ app.get('/health', (req, res) => {
   res.sendStatus(200); 
 });
 
-setupSwagger(app);
-
 // render index.html for root URL
 app.use(express.static('public'));
+app.use(passport.authenticate('session'));
+
+setupSwagger(app);
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}.`);

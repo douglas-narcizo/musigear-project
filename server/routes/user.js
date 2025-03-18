@@ -135,6 +135,9 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 userRouter.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {    // async (req, res) => {
+    console.log('User authenticated successfully:', req.user);
+    console.log('Session object:', req.session);
+    console.log('Session ID:', req.sessionID);
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }
 );

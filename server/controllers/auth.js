@@ -68,7 +68,7 @@ module.exports = (passport) => {
 
   passport.serializeUser((user, done) => {
     console.log('serializeUser', user);
-    done(null, user.id);
+    done(null, user); //.id);
   });
 
   passport.deserializeUser(async (id, done) => {
@@ -78,7 +78,7 @@ module.exports = (passport) => {
         return done(new Error('User not found'));
       }
       console.log('deserializeUser', userResult.rows[0]);
-      done(null, userResult.rows[0]); //.id); 
+      done(null, userResult.rows[0].id); 
     } catch (err) {
       done(err);
     }

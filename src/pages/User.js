@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
@@ -16,18 +16,24 @@ export default function User() {
   const { user, logout, verifySession } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  // Trigger session verification when the User page is loaded
   useEffect(() => {
-    if (!user) {
-      verifySession();
-    }
-  }, [user, verifySession]);
+    const verify = async () => {
+      await verifySession();
+      setLoading(false);
+    };
+    verify();
+  }, [verifySession]);
 
-  if (!user) {
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
+/*   if (!user) {
     navigate('/login');
     return null; // Prevent rendering until navigation is complete
-  }
+  } */
 
   return (
     <Container>

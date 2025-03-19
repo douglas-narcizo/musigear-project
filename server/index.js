@@ -94,7 +94,7 @@ app.use(
       secure: true, // Ensure the cookie is only sent over HTTPS
       httpOnly: true, // Ensure the cookie is not accessible via JavaScript
       sameSite: 'None', // Allow cross-site cookies
-      domain: '.musigear.com', // Share cookie across subdomains
+      domain: '.musigear.app', // Share cookie across subdomains
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })

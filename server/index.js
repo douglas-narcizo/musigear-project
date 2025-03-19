@@ -23,9 +23,6 @@ const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
@@ -80,6 +77,9 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Configure session
 app.use(

@@ -28,6 +28,34 @@ export const AuthProvider = ({ children }) => {
     verifyUser();
   }, []);
 
+  const verifySession = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/verify-session`, {
+        method: 'GET',
+        credentials: 'include', // Include session cookies
+      });
+      if (response.ok) {
+        const userData = await response.json();
+        setUser(userData);
+        setIsAuthenticated(true);
+        localStorage.setItem('user', JSON.stringify(userData));
+      } else {
+        setUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem('user');
+      }
+    } catch (error) {
+      console.error('Session verification failed:', error);
+      setUser(null);
+      setIsAuthenticated(false);
+      localStorage.removeItem('user');
+    }
+  };
+
+  useEffect(() => {
+    verifySession();
+  }, []);
+
   const login = async (email, password) => {
     try {
       const userData = await userLogin(email, password);
@@ -96,7 +124,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, register, loginWithGoogleHandler, loginWithFacebookHandler, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, register, loginWithGoogleHandler, loginWithFacebookHandler, isAuthenticated, verifySession }}>
       {children}
     </AuthContext.Provider>
   );

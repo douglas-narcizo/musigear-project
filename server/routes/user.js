@@ -64,13 +64,13 @@ userRouter.route('/register')
  */
 
 // Login User
-/* userRouter.route('/login')
+userRouter.route('/login')
 .post( passport.authenticate('local'),
   (req, res) => {
     res.status(200).json(req.user);
-}); */
+});
 
-userRouter.route('/login')
+/* userRouter.route('/login')
 .post( passport.authenticate('local', { failureRedirect: '/login' }),
   (req, res) => {
     req.login(req.user, (err) => {
@@ -83,7 +83,7 @@ userRouter.route('/login')
       res.status(200).json(req.user);
 //      res.send('ok');
     });
-});
+}); */
 
 /**
  * @swagger
@@ -148,7 +148,7 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 
 // Google Callback
 userRouter.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {    // async (req, res) => {
     console.log('User authenticated successfully:', req.user);
     console.log('Session object:', req.session);
@@ -186,7 +186,7 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 
 // Facebook Callback
 userRouter.get('/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }

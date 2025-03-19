@@ -80,7 +80,8 @@ userRouter.route('/login')
       }
       console.log("User logged in:", req.user); // Check req.user
       console.log("Session before response:", req.session); // Added log
-      res.status(200).json(req.user);
+      // res.status(200).json(req.user);
+      res.send('ok');
     });
 });
 

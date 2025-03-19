@@ -21,7 +21,9 @@ export default function User() {
   useEffect(() => {
     const verify = async () => {
       await verifySession();
-      setLoading(false);
+      if (user) {
+        setLoading(false);
+      }
     };
     verify();
   }, [verifySession]);

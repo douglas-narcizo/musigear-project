@@ -30,12 +30,15 @@ export const AuthProvider = ({ children }) => {
 
   const verifySession = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/verify-session`, {
+      const userData = await checkLoginStatus(); /* fetch(`${process.env.REACT_APP_BACKEND_URL}/user/verify-session`, {
         method: 'GET',
         credentials: 'include', // Include session cookies
-      });
-      if (response.ok) {
-        const userData = await response.json();
+      }); */
+      if (userData) {
+//        const userData = await response.json();
+        if (!userData.picture) {
+          userData.picture = `https://api.dicebear.com/9.x/personas/png?seed=${userData.firstName}${userData.lastName}`;
+        };
         setUser(userData);
         setIsAuthenticated(true);
         localStorage.setItem('user', JSON.stringify(userData));

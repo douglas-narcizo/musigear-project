@@ -31,6 +31,24 @@ app.use(cors({
   credentials: true,
 }));
 
+/* const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://checkout.stripe.com',
+  'https://stripe.com',
+  'https://stripe.network'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+})); */
+
 // Configure helmet for CSP
 /* app.use(helmet({
   contentSecurityPolicy: {
@@ -55,13 +73,13 @@ app.use(cors({
 })); */
 
 //  Manually configure CSP
-/* app.use((req, res, next) => {
+app.use((req, res, next) => {
   res.setHeader(
     'Content-Security-Policy',
     "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://checkout.stripe.com https://apis.google.com https://accounts.google.com https://connect.facebook.net process.env.BACKEND_URL; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://*.stripe.com https://*.googleusercontent.com https://*.fbcdn.net https://platform-lookaside.fbsbx.com; connect-src 'self' https://*.stripe.com process.env.BACKEND_URL https://accounts.google.com https://graph.facebook.com; frame-src 'self' https://js.stripe.com https://accounts.google.com https://www.facebook.com https://connect.facebook.net;"
   );
   next();
-}); */
+});
 
 // Configure session
 app.use(
@@ -101,11 +119,6 @@ app.get('/test-session', (req, res) => {
 
 // render index.html for root URL
 app.use(express.static('public'));
-
-app.use((req, res, next) => {
-  console.log('Protocol:', req.protocol);
-  next();
-});
 
 setupSwagger(app);
 

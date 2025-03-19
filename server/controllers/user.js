@@ -42,8 +42,22 @@ const getOneById = async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: err.message });
     }      
-  } else {
-    console.log('backend getOneById 400', req.user);
+  } else if (userId) {
+    console.log('backend getOneById tem ID'); //, req.user);
+    res.status(200).json({
+      id: userId,
+      email: 'tem@aidi.com',
+      firstName: 'Tem',
+      lastName: 'Aidi',
+      picture: ''});
+    } else {
+      console.log('backend getOneById 400');
+      res.status(200).json({
+        id: '00000000-0000-0000-0000-000000000000',
+        email: 'deu@ruim.com',
+        firstName: 'Deu',
+        lastName: 'Ruim',
+        picture: ''});
     res.status(400).json({ message: 'Please login first!' });
   }
 }

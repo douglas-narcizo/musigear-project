@@ -210,8 +210,8 @@ userRouter.get('/facebook/callback',
 // Verify Session
 userRouter.route('/verify-session')
 .get((req, res) => {
+  console.log('Verify session -user:', req.user, '-session:', req.session);
   if (req.isAuthenticated()) {
-    console.log('Verify session:', req.user, '-session:', req.session);
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {
     res.status(401).json({ message: 'Not authenticated' });

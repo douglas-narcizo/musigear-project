@@ -13,12 +13,20 @@ import Avatar from '@mui/material/Avatar';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function User() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, verifySession } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
 
+  // Trigger session verification when the User page is loaded
+  useEffect(() => {
+    if (!user) {
+      verifySession();
+    }
+  }, [user, verifySession]);
+
   if (!user) {
     navigate('/login');
+    return null; // Prevent rendering until navigation is complete
   }
 
   return (

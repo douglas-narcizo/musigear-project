@@ -151,7 +151,7 @@ userRouter.get('/google/callback',
   passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {    // async (req, res) => {
     console.log('User authenticated successfully:', req.user);
-    console.log('Session object:', req.session);
+//    console.log('Session object:', req.session);
     console.log('Session ID:', req.sessionID);
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }
@@ -188,6 +188,8 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 userRouter.get('/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {
+    console.log('User authenticated successfully:', req.user);
+    console.log('Session ID:', req.sessionID);
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }
 );
@@ -209,6 +211,7 @@ userRouter.get('/facebook/callback',
 userRouter.route('/verify-session')
 .get((req, res) => {
   if (req.isAuthenticated()) {
+    console.log('Verify session:', req.user, '-session:', req.session);
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {
     res.status(401).json({ message: 'Not authenticated' });

@@ -42,7 +42,7 @@ module.exports = (passport) => {
     async (token, tokenSecret, profile, done) => {
       try {
         await userCtl.getOneByGoogleId(token, tokenSecret, profile, done);
-        return done(null, profile);
+        return done(null, user);
       } catch (err) {
         return done(err);
       }
@@ -59,7 +59,7 @@ module.exports = (passport) => {
     async (accessToken, refreshToken, profile, done) => {
       try {
         await userCtl.getOneByFacebookId(accessToken, refreshToken, profile, done);
-        return done(null, profile);
+        return done(null, user);
       } catch (err) {
         return done(err);
       }

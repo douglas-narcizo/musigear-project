@@ -14,6 +14,9 @@ const { pool } = require('./db'); // Import the pool instance
 require('dotenv').config();
 const { PORT, SESSION_SECRET, DATABASE_URL } = require('./config');
 
+// Enable trust proxy (important for secure cookies behind a reverse proxy)
+app.enable('trust proxy');
+
 // Routers imports
 const userRouter = require('./routes/user');
 const productRouter = require('./routes/product');
@@ -98,6 +101,11 @@ app.get('/test-session', (req, res) => {
 
 // render index.html for root URL
 app.use(express.static('public'));
+
+app.use((req, res, next) => {
+  console.log('Protocol:', req.protocol);
+  next();
+});
 
 setupSwagger(app);
 

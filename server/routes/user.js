@@ -150,8 +150,7 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 userRouter.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {    // async (req, res) => {
-    console.log('User authenticated successfully:', req.user);
-//    console.log('Session object:', req.session);
+    console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }
@@ -188,7 +187,7 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 userRouter.get('/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {
-    console.log('User authenticated successfully:', req.user);
+    console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
     res.redirect(`${process.env.FRONTEND_URL}/user`);
   }

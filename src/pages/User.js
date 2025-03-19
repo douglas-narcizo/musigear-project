@@ -20,22 +20,22 @@ export default function User() {
 
   useEffect(() => {
     const verify = async () => {
+      console.log('Verifying session on User page...');
       await verifySession();
-      if (user) {
-        setLoading(false);
-      }
+      setLoading(false);
+      // if (user) {}
     };
     verify();
-  }, [verifySession]);
+  }, []); // verifySession
 
   if (loading) {
     return <Typography>Loading...</Typography>;
   }
-
-/*   if (!user) {
+  
+  if (!user) {
     navigate('/login');
-    return null; // Prevent rendering until navigation is complete
-  } */
+    return null;
+  }
 
   return (
     <Container>

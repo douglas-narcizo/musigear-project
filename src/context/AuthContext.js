@@ -30,12 +30,14 @@ export const AuthProvider = ({ children }) => {
 
   const verifySession = async () => {
     try {
+      console.log('Verifying session...');
       const userData = await checkLoginStatus(); /* fetch(`${process.env.REACT_APP_BACKEND_URL}/user/verify-session`, {
         method: 'GET',
         credentials: 'include', // Include session cookies
       }); */
       if (userData) {
 //        const userData = await response.json();
+        console.log('Session verified:', userData);
         if (!userData.picture) {
           userData.picture = `https://api.dicebear.com/9.x/personas/png?seed=${userData.firstName}${userData.lastName}`;
         };
@@ -43,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
         localStorage.setItem('user', JSON.stringify(userData));
       } else {
+        console.log('Session not authenticated');
         setUser(null);
         setIsAuthenticated(false);
         localStorage.removeItem('user');

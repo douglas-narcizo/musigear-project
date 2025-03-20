@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path'); // Import the path module
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -118,7 +119,15 @@ app.get('/test-session', (req, res) => {
 });
 
 // render index.html for root URL
-app.use(express.static('public'));
+// app.use(express.static('public'));
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle all other routes by serving the 'index.html' file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 setupSwagger(app);
 

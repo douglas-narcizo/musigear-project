@@ -152,7 +152,12 @@ userRouter.get('/google/callback',
   (req, res) => {    // async (req, res) => {
     console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
-    res.redirect(`${process.env.FRONTEND_URL}/user`);
+    console.log('Session object:', req.session);
+
+    // Add a small delay before redirecting
+    setTimeout(() => {
+      res.redirect(`${process.env.FRONTEND_URL}/user?verify=true`);
+    }, 500);
   }
 );
 
@@ -189,8 +194,12 @@ userRouter.get('/facebook/callback',
   (req, res) => {
     console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
-    res.redirect(`${process.env.FRONTEND_URL}/user`);
-  }
+    console.log('Session object:', req.session);
+
+    // Add a small delay before redirecting
+    setTimeout(() => {
+      res.redirect(`${process.env.FRONTEND_URL}/user?verify=true&other=none`);
+    }, 500);  }
 );
 
 /**
@@ -209,7 +218,7 @@ userRouter.get('/facebook/callback',
 // Verify Session
 userRouter.route('/verify-session')
 .get((req, res) => {
-  console.log('Verify session -user:', req.user, '-session:', req.session);
+  console.log('Verify session - user:', req.user, '- session:', req.session);
   if (req.isAuthenticated()) {
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {

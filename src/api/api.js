@@ -65,7 +65,7 @@ export const registerUser = async (email, password, firstName, lastName) => {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(email, password, firstName, lastName),
-    credentials: 'include', // Include credentials in the request
+    credentials: 'include',
   });
 
   if (!response.ok) {
@@ -83,7 +83,6 @@ export const loginWithGoogle = async () => {
     credentials: 'include',
   });
   const json = await response.json();
-  console.log('frontend loginWithGoogle', json);
   return json;
 }
 
@@ -93,7 +92,6 @@ export const loginWithFacebook = async () => {
     credentials: 'include',
   });
   const json = await response.json();
-  console.log('frontend loginWithFacebook', json);
 
   // Fetch the profile picture URL using Graph API
   const pictureResponse = await fetch(`https://graph.facebook.com/${json.id}/picture?type=large&redirect=false`, {
@@ -140,8 +138,7 @@ export const fetchCart = async () => {
     credentials: 'include',
   });
   if (!response.ok) {
-    return {id: '', userId: '', items: []};
-    // throw new Error('Failed to fetch cart');
+    return {id: '', userId: '', items: []}; // return an empty cart object
   }
   return response.json();
 };

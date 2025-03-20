@@ -208,7 +208,6 @@ const getById = async (req, res) => {
 
 const updateById = async (req, res) => {
     if (!req.user) {
-      console.log('backend updateById: user not found');
       return res.status(404).json({ message: 'Please log in first!' });
     }
     const { cartId } = req.params;

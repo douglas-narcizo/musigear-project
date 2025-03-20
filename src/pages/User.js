@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 import Container from '@mui/material/Container';
@@ -16,9 +16,10 @@ export default function User() {
   const { user, logout, verifySession } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+/*   useEffect(() => {
     const verify = async () => {
       console.log('Verifying session on User page...');
       await verifySession();
@@ -26,7 +27,19 @@ export default function User() {
       // if (user) {}
     };
     verify();
-  }, []); // verifySession
+  }, []); */ // verifySession
+
+  useEffect(() => {
+    const verify = async () => {
+      const params = new URLSearchParams(location.search);
+      if (params.get('verify') === 'true') {
+        console.log('Forcing session verification...');
+        await verifySession();
+      }
+      setLoading(false);
+    };
+    verify();
+  }, [location.search, verifySession]);
 
   if (loading) {
     return <Typography>Loading...</Typography>;

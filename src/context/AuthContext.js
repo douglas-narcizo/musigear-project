@@ -7,8 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Verify user session on app start
-  useEffect(() => {
+  // Verify user session on app start (previous version)
+/*   useEffect(() => {
     const verifyUser = async () => {
       const sessionUser = await checkLoginStatus();
       if (sessionUser) {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     verifyUser();
-  }, []);
+  }, []); */
 
   const verifySession = async () => {
     try {
@@ -100,7 +100,6 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         setIsAuthenticated(true);
         localStorage.setItem('user', JSON.stringify(userData));
-        console.log(userData, 'user data');
       }
     } catch (error) {
       console.error('Google login error:', error);

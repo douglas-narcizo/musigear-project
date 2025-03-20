@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // , useLocation
 import { AuthContext } from '../context/AuthContext';
 import { CartContext } from '../context/CartContext';
 import Container from '@mui/material/Container';
@@ -16,20 +16,21 @@ export default function User() {
   const { user, logout, verifySession } = useContext(AuthContext);
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
-  const location = useLocation();
+//  const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-/*   useEffect(() => {
+  useEffect(() => {
     const verify = async () => {
-      console.log('Verifying session on User page...');
+      console.log('Verify session effect');
       await verifySession();
-      setLoading(false);
-      // if (user) {}
+      if (user) {
+        setLoading(false);
+      }
     };
     verify();
-  }, []); */ // verifySession
+  }, []); // verifySession
 
-  useEffect(() => {
+/*   useEffect(() => {
     const verify = async () => {
       const params = new URLSearchParams(location.search);
       if (params.get('verify') === 'true') {
@@ -39,12 +40,16 @@ export default function User() {
       setLoading(false);
     };
     verify();
-  }, [location.search, verifySession]);
+  }, [location.search, verifySession]); */
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return (
+      <Container>
+        <Typography variant='h3'>Loading...</Typography>
+      </Container>
+    );
   }
-  
+
   if (!user) {
     navigate('/login');
     return null;

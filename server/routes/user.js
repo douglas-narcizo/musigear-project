@@ -65,25 +65,10 @@ userRouter.route('/register')
 
 // Login User
 userRouter.route('/login')
-.post( passport.authenticate('local'),
+.post( passport.authenticate('local', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {
     res.status(200).json(req.user);
 });
-
-/* userRouter.route('/login')
-.post( passport.authenticate('local', { failureRedirect: '/login' }),
-  (req, res) => {
-    req.login(req.user, (err) => {
-      if (err) {
-        console.error("Error during req.login:", err);
-        return res.status(500).send("Login error");
-      }
-//      console.log("User logged in:", req.user); // Check req.user
-//      console.log("Session before response:", req.session); // Added log
-      res.status(200).json(req.user);
-//      res.send('ok');
-    });
-}); */
 
 /**
  * @swagger
@@ -148,16 +133,12 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 
 // Google Callback
 userRouter.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
-  (req, res) => {    // async (req, res) => {
-    console.log('User authenticated successfully:', req.user.id);
-    console.log('Session ID:', req.sessionID);
-    console.log('Session object:', req.session);
-
-    // Add a small delay before redirecting
+  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}` }), // /login
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true
+/*     // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true
-    }, 500);
+    }, 500); */
   }
 );
 
@@ -190,16 +171,13 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 
 // Facebook Callback
 userRouter.get('/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
+  passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}` }), // /login
   (req, res) => {
-    console.log('User authenticated successfully:', req.user.id);
-    console.log('Session ID:', req.sessionID);
-    console.log('Session object:', req.session);
-
-    // Add a small delay before redirecting
+    res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true&other=none
+ /*    // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true&other=none
-    }, 500);  }
+    }, 500); */
+  }
 );
 
 /**
@@ -218,7 +196,7 @@ userRouter.get('/facebook/callback',
 // Verify Session
 userRouter.route('/verify-session')
 .get((req, res) => {
-  console.log('Verify session - user:', req.user, '- session:', req.session);
+  console.log('Verify session - user:', req.user.id,); // '- session:', req.session
   if (req.isAuthenticated()) {
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {

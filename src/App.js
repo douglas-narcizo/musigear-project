@@ -10,7 +10,6 @@ import Home from './pages/Home';
 import Login from './components/Login/Login';
 import Register from './pages/Register';
 import User from './pages/User';
-import Oauth from './pages/Oauth';
 import Product from './pages/Product';
 import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
@@ -29,7 +28,6 @@ export default function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/user' element={<User />} />
-        <Route path='/oauth' element={<Oauth />} />
         <Route path='/products/:productId' element={<Product />} />
         <Route path='/shopping-cart' element={<ShoppingCart />} />
         <Route path='/checkout' element={<Checkout stripe={stripePromise} />} />

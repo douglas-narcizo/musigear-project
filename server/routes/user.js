@@ -156,7 +156,7 @@ userRouter.get('/google/callback',
 
     // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true
+      res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true
     }, 500);
   }
 );
@@ -198,7 +198,7 @@ userRouter.get('/facebook/callback',
 
     // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true&other=none
+      res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true&other=none
     }, 500);  }
 );
 

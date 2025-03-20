@@ -148,7 +148,7 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 
 // Google Callback
 userRouter.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: `/login` }), // ${process.env.FRONTEND_URL}
+  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {    // async (req, res) => {
     console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
@@ -156,7 +156,7 @@ userRouter.get('/google/callback',
 
     // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`/user`); // user?verify=true
+      res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true
     }, 500);
   }
 );
@@ -190,7 +190,7 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 
 // Facebook Callback
 userRouter.get('/facebook/callback', 
-  passport.authenticate('facebook', { failureRedirect: `/login` }),
+  passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => {
     console.log('User authenticated successfully:', req.user.id);
     console.log('Session ID:', req.sessionID);
@@ -198,7 +198,7 @@ userRouter.get('/facebook/callback',
 
     // Add a small delay before redirecting
     setTimeout(() => {
-      res.redirect(`/user`); // user?verify=true&other=none
+      res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true&other=none
     }, 500);  }
 );
 

@@ -27,13 +27,14 @@ const register = async (req, res) => {
 const getOneById = async (req, res) => {
   const { userId } = req.body;
   console.log('backend getOneById req.user:', req.user);
-  if (req.user && req.user.id == userId) {
+  console.log('backend getOneById userId:', userId);
+  if (req.user) { // && req.user.id == userId) {
     try {
       const result = await pool.query(`
         SELECT id, email, first_name AS "firstName", last_name AS "lastName", picture
         FROM users
         WHERE id = $1`,
-        [userId]);
+        [req.user.id]);
       if (result.rows.length === 0) {
         res.status(404).json({ message: 'User not found!' });
       } else {
@@ -42,22 +43,7 @@ const getOneById = async (req, res) => {
     } catch (error) {
       res.status(400).json({ message: err.message });
     }      
-  } else if (userId) {
-    console.log('backend getOneById tem ID'); //, req.user);
-    res.status(200).json({
-      id: userId,
-      email: 'tem@aidi.com',
-      firstName: 'Tem',
-      lastName: 'Aidi',
-      picture: ''});
-    } else {
-      console.log('backend getOneById 400');
-      res.status(200).json({
-        id: '00000000-0000-0000-0000-000000000000',
-        email: 'deu@ruim.com',
-        firstName: 'Deu',
-        lastName: 'Ruim',
-        picture: ''});
+  } else {
     res.status(400).json({ message: 'Please login first!' });
   }
 }

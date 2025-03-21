@@ -173,7 +173,7 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 userRouter.get('/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}` }), // /login
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true&other=none
+    res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true&other=none
  /*    // Add a small delay before redirecting
     setTimeout(() => {
     }, 500); */
@@ -196,10 +196,11 @@ userRouter.get('/facebook/callback',
 // Verify Session
 userRouter.route('/verify-session')
 .get((req, res) => {
-  console.log('Verify session - user:', req.user.id,); // '- session:', req.session
   if (req.isAuthenticated()) {
+    console.log('Verify session - user:', req.user.id); // '- session:', req.session
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {
+    console.log('Verify session - no user');
     res.status(401).json({ message: 'Not authenticated' });
   }
 });

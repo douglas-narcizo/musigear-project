@@ -45,7 +45,7 @@ export default function User() {
   if (loading) {
     return (
       <Container>
-        <Typography variant='h3'>Loading...</Typography>
+        <Typography variant='h4' margin={4}>Loading...</Typography>
       </Container>
     );
   }

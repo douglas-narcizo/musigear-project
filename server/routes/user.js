@@ -135,10 +135,7 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 userRouter.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}` }), // /login
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}`); // user?verify=true
-/*     // Add a small delay before redirecting
-    setTimeout(() => {
-    }, 500); */
+    res.redirect(`${process.env.FRONTEND_URL}`);
   }
 );
 
@@ -173,10 +170,7 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 userRouter.get('/facebook/callback', 
   passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_URL}` }), // /login
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}/user`); // user?verify=true&other=none
- /*    // Add a small delay before redirecting
-    setTimeout(() => {
-    }, 500); */
+    res.redirect(`${process.env.FRONTEND_URL}`);
   }
 );
 

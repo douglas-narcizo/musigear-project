@@ -7,7 +7,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import './Carousel.css';
 
-/*rgba(0, 0, 0, 0.05)*/
 const CustomIconButton = styled(IconButton)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -19,21 +18,19 @@ const CustomIconButton = styled(IconButton)(({ theme }) => ({
   },
 }));
 
-const Carousel = ({children, carouselItemsToShow=3}) => {
+const Carousel = ({children, carouselItemsToShow=2}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselWrapperRef = useRef(null);
-//  const rem = parseInt(getComputedStyle(document.documentElement).fontSize);
+  const itemWidth = children[0]?.props?.style?.width || 276; // Default to 276 if width is not defined
 
   const nextSlide = () => {
     if (carouselWrapperRef.current) {
-      const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
       carouselWrapperRef.current.scrollBy({ left: itemWidth * carouselItemsToShow, behavior: 'smooth' });
     }
   };
 
   const prevSlide = () => {
     if (carouselWrapperRef.current) {
-      const itemWidth = carouselWrapperRef.current.scrollWidth / children.length;
       carouselWrapperRef.current.scrollBy({ left: -itemWidth * carouselItemsToShow, behavior: 'smooth' });
     }
   };
@@ -58,7 +55,15 @@ const Carousel = ({children, carouselItemsToShow=3}) => {
         carouselWrapper.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [children.length, carouselItemsToShow]);
+  }, [children, carouselItemsToShow]);
+
+  const hasRightOverflow = () => {
+    if (carouselWrapperRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselWrapperRef.current;
+      return scrollLeft + clientWidth + 60 < scrollWidth;
+    }
+    return false;
+  };
 
   const prevButton = (
     <CustomIconButton size='large' className='carousel-button' onClick={prevSlide}
@@ -87,21 +92,10 @@ const Carousel = ({children, carouselItemsToShow=3}) => {
         </div>
       </div>
 
-      {currentIndex < children.length - carouselItemsToShow ? nextButton : ''}
+      {hasRightOverflow() ? nextButton : ''}
 
     </Container>
   );
 };
 
 export default Carousel;
-
-
-/*
-
- style={{width: (carouselItemsToShow * 280) - 2 }}
-
-          style={{
-            transform: `translateX(${((100 / carouselItemsToShow) * currentIndex) * -1 + 0.1}%)`,
-            transition: 'transform 0.3s ease-in-out'
-          }}
-*/

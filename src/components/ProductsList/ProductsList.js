@@ -9,7 +9,7 @@ import './ProductsList.css';
 
 
 export default function ProductsList () {
-  const carouselItemsToShow = Math.floor((window.innerWidth - 240) / 280);
+  const carouselItemsToShow = Math.min(Math.floor((window.innerWidth - 48) / 280), 5);
   const { products, category } = useContext(ProductContext);
 
   const productDeals = (list) => {

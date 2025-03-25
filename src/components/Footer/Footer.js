@@ -26,21 +26,21 @@ const Footer = () => {
         <Typography variant='body2' fontWeight={500} mx='4px' mt='2px'>
           - Douglas Narcizo | 2025
         </Typography>
+        <Link
+          href='https://www.linkedin.com/in/douglas-narcizo' 
+          target='_blank' 
+          rel='noopener noreferrer' 
+          sx={{ ml: '0.75rem', textDecoration: 'none' }}
+        >
+          <LinkedInIcon />
+        </Link>
         <Link 
           href='https://github.com/douglas-narcizo' 
           target='_blank' 
           rel='noopener noreferrer' 
-          sx={{ mx: '0.5rem', p: 0, textDecoration: 'none' }}
+          sx={{ ml: '0.5rem', p: 0, textDecoration: 'none' }}
         >
           <GitHubIcon />
-        </Link>
-        <Link 
-          href='https://www.linkedin.com/in/douglas-narcizo' 
-          target='_blank' 
-          rel='noopener noreferrer' 
-          sx={{ mx: '0.5rem', textDecoration: 'none' }}
-        >
-          <LinkedInIcon />
         </Link>
       </Stack>
     </Box>

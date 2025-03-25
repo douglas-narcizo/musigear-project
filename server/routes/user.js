@@ -194,7 +194,7 @@ userRouter.route('/verify-session')
     console.log('Verify session - user:', req.user.id); // '- session:', req.session
     res.status(200).json(req.user); //{ message: 'Authenticated' });
   } else {
-    console.log('Verify session - no user');
+//    console.log('Verify session - no user');
     res.status(401).json({ message: 'Not authenticated' });
   }
 });

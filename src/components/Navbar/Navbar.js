@@ -37,13 +37,24 @@ function Navbar() {
       }}
     >
       <Container maxWidth='xl' sx={{ display: 'flex', justifyContent: 'space-between' }}>
-
-        <Typography
+{/*     <Typography
           variant='h3' component='h1' fontWeight='500' fontStyle='italic'
           sx={{ ml: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, letterSpacing: 4, color: 'primary.contrastText', display: 'inline-flex' }}
-        >
-          MusiGear
-        </Typography>
+        > */}
+        <Box sx={{ ml: { sm: 1, md: 4 }, mt: { sm: 0, md: 2 } }}>
+          <Typography
+            variant='h3' fontFamily='Atma'
+            sx={{ color: 'primary.contrastText', display: 'inline-flex', transform: { xs: 'translateY(2px)', md: 'none' } }}
+            >
+            Musi
+          </Typography>
+          <Typography
+            variant='h3' fontFamily='Atma'
+            sx={{ ml: '2px', color: 'warning.light', display: 'inline-flex', transform: { xs: 'translateY(2px)', md: 'none' } }}
+          >
+            Gear
+          </Typography>
+        </Box>
 
         <Box sx={{ mr: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, flexGrow: 1, textAlign: 'right' }}>
           <IconButton size='large'>

@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <Container maxWidth='sm'>
+    <Container maxWidth='sm' sx={{ height: '83.5vh' }}>
       <Box
         sx={{
           display: 'flex',
@@ -47,27 +47,27 @@ export default function Login() {
           border: 'InfoText',
         }}
       >
-        <Stack direction="column" justifyContent="space-between">
+        <Stack direction='column' justifyContent='space-between'>
           <Typography variant='h4' component='h1' sx={{fontWeight:600, my: 3}}>
             Login
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
-              id="email"
-              label="e-mail"
+              id='email'
+              label='e-mail'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
             <TextField
-              id="password"
-              label="password"
+              id='password'
+              label='password'
               value={password}
-              type="password"
+              type='password'
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <Button variant="contained" endIcon={<SendIcon />} type="submit">
+            <Button variant='contained' endIcon={<SendIcon />} type='submit'>
               Login
             </Button>
           </form>

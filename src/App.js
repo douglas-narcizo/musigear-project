@@ -15,6 +15,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer"; // Import the Footer component
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -33,6 +34,7 @@ export default function App() {
         <Route path='/checkout' element={<Checkout stripe={stripePromise} />} />
         <Route path='/order-complete' element={<Complete stripe={stripePromise} />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

@@ -15,7 +15,7 @@ import ShoppingCart from './pages/ShoppingCart';
 import Checkout from './pages/Checkout';
 import Complete from './pages/Complete';
 import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer"; // Import the Footer component
+import Footer from "./components/Footer/Footer";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 

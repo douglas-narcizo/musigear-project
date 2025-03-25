@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -23,8 +22,7 @@ function Navbar() {
   const { category } = useContext(ProductContext);
   const navigate = useNavigate();
 
-  const handleNavigation = (path, catName) => {
-  //  setCategory(catName);
+  const handleNavigation = (path) => {
     navigate(path);
   }
   
@@ -37,25 +35,17 @@ function Navbar() {
       }}
     >
       <Container maxWidth='xl' sx={{ display: 'flex', justifyContent: 'space-between' }}>
-{/*     <Typography
-          variant='h3' component='h1' fontWeight='500' fontStyle='italic'
-          sx={{ ml: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, letterSpacing: 4, color: 'primary.contrastText', display: 'inline-flex' }}
-        > */}
-        <Box sx={{ ml: { sm: 1, md: 4 }, mt: { sm: 0, md: 2 } }}>
-          <Typography
-            variant='h3' fontFamily='Atma'
-            sx={{ color: 'primary.contrastText', display: 'inline-flex', transform: { xs: 'translateY(2px)', md: 'none' } }}
-            >
-            Musi
-          </Typography>
-          <Typography
-            variant='h3' fontFamily='Atma'
-            sx={{ ml: '2px', color: 'warning.light', display: 'inline-flex', transform: { xs: 'translateY(2px)', md: 'none' } }}
-          >
-            Gear
-          </Typography>
+        {/* ----- APP LOGO ----- */}
+        <Box sx={{ ml: { xs: 1, md: 4 }, mt: { xs: 1, md: 2 }, width: {xs: '12rem', md: '15rem'} }}>
+          <img
+            src="/assets/images/MusiGear_logo.svg"
+            alt="MusiGear Logo"
+            style={{ width: '100%', cursor: 'pointer' }}
+            onClick={() => handleNavigation('/')}
+          />
         </Box>
 
+        {/* ----- LOGIN / USER ----- */}
         <Box sx={{ mr: { sm: 1, md: 4 }, mt: { sm: 1, md: 2 }, flexGrow: 1, textAlign: 'right' }}>
           <IconButton size='large'>
             {cart.itemsCount ?
@@ -86,9 +76,9 @@ function Navbar() {
             </Button>
           }
         </Box>
-
       </Container>
 
+      {/* ----- NAV BUTTONS BAR (wide) ----- */}
       <Container maxWidth='xl' sx={{ display: { xs: 'none', sm: 'flex' }, overflow: 'auto' }}>
         <Toolbar variant='dense' sx={{ m: 0 }}>
           <Box component='nav' sx={{ m: 0, display: 'flex', overflow: 'auto' }}>
@@ -112,6 +102,7 @@ function Navbar() {
         </Toolbar>
       </Container>
 
+      {/* ----- NAV BUTTONS BAR (narrow) ----- */}
       <Container sx={{ display: { xs: 'flex', sm: 'none' }, overflowX: 'auto' }}>
         <Toolbar variant='dense' sx={{ minHeight: '1.8rem' }}>
           <Box component='nav' sx={{ display: 'flex', overflow: 'auto' }}>
@@ -120,7 +111,7 @@ function Navbar() {
                 key={cat.title}
                 size='small'
                 fontWeight='500'
-                sx={{ p: '0.2rem 0', color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
+                sx={{ p: '0.2rem', color: category === cat.name ? 'primary.contrastText' : 'hsla(0, 0%, 100%, 0.6)',
                   textWrap: 'nowrap',
                   border: category === cat.name ? '1px solid hsla(0, 0%, 100%, 0.5)' : '1px solid hsla(0, 0%, 100%, 0)',
                   borderRadius: '0.35rem',

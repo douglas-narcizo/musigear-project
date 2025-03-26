@@ -25,10 +25,6 @@ export const CartProvider = ({ children }) => {
         let cartData;
         const storedCart = await JSON.parse(localStorage.getItem('cart'));
         if (user) {
-          if (user.firstName === 'Douglas') {
-            localStorage.removeItem('cart');
-            sessionStorage.removeItem('cart');
-          }
           if (storedCart) {
             if (!storedCart.userId) {
               cartData = await updateCart(storedCart.id);

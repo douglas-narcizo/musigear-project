@@ -15,7 +15,7 @@ export default function ProductDetail (props) {
   const { handleAddToCart } = useContext(CartContext);
   
   return (
-    <Container sx={{ height: '70vh' }} className='product-container'>
+    <Container sx={{ height: '72vh' }} className='product-container'>
       <Card sx={{ height: '98%', position: 'relative' }} className='product-wrapper'>
         <CardMedia
           component='img'
@@ -44,7 +44,7 @@ export default function ProductDetail (props) {
         <CardHeader
           title={product.name}
           titleTypographyProps={{ fontWeight: 500 }}
-          subheader={product.description}
+          subheader={`${product.description} – (This is a demonstration product, for portfolio purposes only!)`}
           subheaderTypographyProps={{ lineHeight: 1.3 }} // , height: 38, overflow: 'hidden'
           sx={{ pt: 1, pb: { xs: 1, sm: 2 }, textAlign: 'left' }}
         />

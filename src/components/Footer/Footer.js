@@ -5,6 +5,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import Divider from '@mui/material/Divider';
 
 const Footer = () => {
   return (
@@ -19,7 +20,7 @@ const Footer = () => {
         marginTop: '2rem',
       }}
     >
-      <Stack direction='row' justifyContent='center' color='primary.main'>
+      <Stack direction='row' justifyContent='center' color='primary.main' mb='1rem'>
         <Typography variant='body2' letterSpacing={2} mt='2px' sx={{fontStyle: 'italic'}}>
           Developed by
         </Typography>
@@ -43,6 +44,12 @@ const Footer = () => {
           <GitHubIcon />
         </Link>
       </Stack>
+      <Divider />
+      <Typography variant='body2' color='primary.main' align='center' mt={2} sx={{fontSize: '0.75rem'}}>
+        This e-commerce platform is a demonstration project created as part of a portfolio showcasing full-stack development skills.
+        All products, prices, and order processing are simulated and for illustrative purposes only.
+        No real transactions will be conducted, and no goods will be shipped.
+      </Typography>
     </Box>
   );
 };

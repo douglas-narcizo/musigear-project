@@ -10,16 +10,13 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-// import { currency } from '../../util/util';
 import Price from '../Price/Price';
 import Rating from '@mui/material/Rating';
-// import './ProductCard.css';
+import './ProductCard.css';
 
 function ProductCard (props) {
   const { product } = props;
   const { handleAddToCart } = useContext(CartContext);
-//  const { handleAddToCart, handleRemoveFromCart } = useContext(CartContext);
-//  href={`/products/${product.id}`}
   const navigate = useNavigate();
 
   return (
@@ -53,7 +50,7 @@ function ProductCard (props) {
               sx={{
                 fontWeight: 500,
                 fontSize: '13px',
-                px: 5, pb: '0.15rem', pt: 4, bgcolor: 'hsl(100 100% 60%)', // borderBottomLeftRadius: '6px',
+                px: 5, pb: '0.15rem', pt: 4, bgcolor: 'hsl(100 100% 60%)',
                 position: 'absolute', top: 0, right: 0,
                 transform: 'rotate(45deg) translate(21px, -48px)'
               }}
@@ -65,14 +62,12 @@ function ProductCard (props) {
           <CardHeader
             title={product.name}
             titleTypographyProps={{ fontSize: '1.2rem', lineHeight: 1.2, fontWeight: 500, letterSpacing: '-0.5px', gutterBottom: true }}
-            subheader={product.description}
-            subheaderTypographyProps={{ lineHeight: 1.2, height: 40, overflow: 'hidden' }}
+            subheader={`${product.description} This is a demonstration product, for portfolio purposes only!`}
+//            subheaderTypographyProps={{ lineHeight: 1.2, height: 40, overflow: 'hidden' }}
+            subheaderTypographyProps={{ title: `${product.description} (This is a demonstration product, for portfolio purposes only!)` }}
             sx={{ pt: 1, pb: 1, textAlign: 'left', borderTop: '2px solid', borderColor: 'primary.light' }}
           />
           <CardContent sx={{ pt: 0, pb: '0.5rem', textAlign: 'left' }}>
-            {/* <Typography variant='h5' sx={{ color: 'warning.dark', fontWeight: 500 }}> */}
-              {/*currency.format(product.price)*/}
-            {/* </Typography> */}
 
             <Rating name='product-rating' value={product.rating} precision={0.5} size='small' readOnly />
 

@@ -1,3 +1,11 @@
+.MuiCardHeader-subheader {
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 /*
 .product-container {
     min-width: 280px;
@@ -17,16 +25,16 @@
 }
 */    
 
-.product-wrapper:hover {
 /*
+.product-wrapper:hover {
     background-color: white;
     background-color: #f0ffff;
     border-color: #0b5050;
     box-shadow: 3px 3px #0b5050;
-*/
     box-shadow: 3px 3px 3px #a53749;
     transition-duration: 0.4s;
 }
+*/
 
 /*
 .product-wrapper h3, h4, p {

@@ -14,10 +14,11 @@ module.exports = productRouter;
 
 /**
  * @swagger
- * /api/products:
+ * /products:
  *   get:
  *     summary: returns a list of products, queried by category
  *     tags: [products]
+ *     security: []
  *     parameters:
  *       - in: query
  *         name: category
@@ -87,7 +88,7 @@ module.exports = productRouter;
 
 /**
  * @swagger
- * /api/products/{productId}:
+ * /products/{productId}:
  *   put:
  *     summary: UPDATES a product in the shop
  *     tags: [products]
@@ -99,6 +100,34 @@ module.exports = productRouter;
  *         schema:
  *           type: string
  *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The product's name
+ *                 example: "pencil"
+ *               price:
+ *                 type: number
+ *                 description: Product's price per unit
+ *                 example: 0.99
+ *               description:
+ *                 type: string
+ *                 description: The product's description
+ *                 example: "An excellent tool to write"
+ *               category:
+ *                 type: string
+ *                 description: The category of the product
+ *                 example: "stationery"
+ *               stock:
+ *                 type: integer
+ *                 format: int32
+ *                 description: The available stock of the product in the shop
+ *                 example: 2
  *     responses:
  *       201:
  *         description: Product successfully updated
@@ -110,8 +139,7 @@ module.exports = productRouter;
  *         description: Bad request
  *   get:
  *     summary: returns the identified product object
- *     tags: [products]
- *     parameters:
+ *     tags: [products] *     security: [] *     parameters:
  *       - name: productId
  *         in: path
  *         description: the ID of the product

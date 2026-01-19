@@ -20,40 +20,45 @@ The API was developed according to OpenAPI directives, and once running, its doc
 ## ENDPOINTS
 
 ### PRODUCTS
-- `GET` /api/products
-- `GET` /api/products?category=categoryId
-- `GET` /api/products/:productId
-- `POST` /api/products
-- `PUT` /api/products/:productId
-- `DELETE` /api/products/:productId
+- `GET` /products
+- `GET` /products?category=categoryId
+- `GET` /products/:productId
+- `POST` /products
+- `PUT` /products/:productId
+- `DELETE` /products/:productId
 
 ### USERS
-- `POST` /api/user/register
-- `POST` /api/user/login
-- `POST` /api/user/logout
-- `GET` /api/user
-- `GET` /api/user/verify-session
-- `GET` /api/user/google
-- `GET` /api/user/google/callback
-- `GET` /api/user/facebook
-- `GET` /api/user/facebook/callback
-- `PUT` /api/user
-- `DELETE` /api/user
+- `POST` /user/register
+- `POST` /user/login
+- `POST` /user/logout
+- `GET` /user
+- `GET` /user/verify-session
+- `GET` /user/google
+- `GET` /user/google/callback
+- `GET` /user/facebook
+- `GET` /user/facebook/callback
+- `PUT` /user
+- `DELETE` /user
 
 ### CHECKOUT
-- `POST` /api/cart/:cartId/checkout
+- `POST` /cart/:cartId/checkout
 
 ### CART
-- `GET` /api/cart
-- `POST` /api/cart
-- `POST` /api/cart/:cartId
-- `GET` /api/cart/:cartId
-- `PUT` /api/cart/:cartId
-- `DELETE` /api/cart/:cartId
+- `GET` /cart
+- `POST` /cart
+- `POST` /cart/:cartId
+- `GET` /cart/:cartId
+- `PUT` /cart/:cartId
+- `DELETE` /cart/:cartId
+- `DELETE` /cart
 
 ### ORDERS
-- `GET` /api/order
-- `POST` /api/order/create-payment-intent
-- `GET` /api/order/:orderId
-- `PUT` /api/order/:orderId
-- `DELETE` /api/order/:orderId
+- `GET` /order
+- `POST` /order/create-payment-intent
+- `GET` /order/:orderId
+- `PUT` /order/:orderId
+- `DELETE` /order/:orderId
+
+### HEALTH & SESSION
+- `GET` /health - Health check endpoint
+- `GET` /test-session - Session testing endpoint

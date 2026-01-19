@@ -139,7 +139,9 @@ module.exports = productRouter;
  *         description: Bad request
  *   get:
  *     summary: returns the identified product object
- *     tags: [products] *     security: [] *     parameters:
+ *     tags: [products]
+ *     security: []
+ *     parameters:
  *       - name: productId
  *         in: path
  *         description: the ID of the product

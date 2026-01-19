@@ -10,14 +10,16 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Price from '../Price/Price';
 import Rating from '@mui/material/Rating';
 import './ProductCard.css';
 
 function ProductCard (props) {
   const { product } = props;
-  const { handleAddToCart } = useContext(CartContext);
+  const { handleAddToCart, loadingItems } = useContext(CartContext);
   const navigate = useNavigate();
+  const isLoading = loadingItems.has(product.id);
 
   return (
     <Box
@@ -81,10 +83,11 @@ function ProductCard (props) {
         <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             variant='contained'
+            disabled={isLoading}
             sx={{ width: 0.4, textAlign: 'center' }}
             onClick={() => handleAddToCart(product.id)}
           >
-            BUY
+            {isLoading ? <CircularProgress size={24} color='inherit' /> : 'BUY'}
           </Button>
         </CardActions>
       </Card>

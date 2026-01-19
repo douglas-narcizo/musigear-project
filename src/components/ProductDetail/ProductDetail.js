@@ -7,12 +7,14 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Price from '../Price/Price';
 import { Rating } from '@mui/material';
 
 export default function ProductDetail (props) {
   const { product } = props;
-  const { handleAddToCart } = useContext(CartContext);
+  const { handleAddToCart, loadingItems } = useContext(CartContext);
+  const isLoading = loadingItems.has(product.id);
   
   return (
     <Container sx={{ height: '72vh' }} className='product-container'>
@@ -58,10 +60,11 @@ export default function ProductDetail (props) {
           <Price amount={product.price} sx={{ color: 'success.main', transform: 'translate(13%) scale(1.25)' }} />
           <Button
             variant='contained'
+            disabled={isLoading}
             sx={{ width: 0.4, height: 'fit-content', display: 'block', margin: '0 auto', mt: { xs: 0, sm: 3 } }}
             onClick={() => handleAddToCart(product.id)}
           >
-            BUY
+            {isLoading ? <CircularProgress size={24} color='inherit' /> : 'BUY'}
           </Button>
         </CardContent>
       </Card>

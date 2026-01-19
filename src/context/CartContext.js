@@ -1,11 +1,14 @@
 import React, { createContext, useState, useEffect, useContext, useRef } from 'react';
-import { fetchCart, addToCart, updateCart, removeFromCart } from '../api/api';
+import { fetchCart, addToCart, updateCart, removeFromCart, getProduct } from '../api/api';
 import { AuthContext } from './AuthContext';
+import ProductContext from './ProductContext';
+import Toast from '../components/Toast/Toast';
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
+  const { products } = useContext(ProductContext);
 
   const emptyCart = useRef({
     id: '',
@@ -17,6 +20,108 @@ export const CartProvider = ({ children }) => {
 
   const [cart, setCart] = useState(emptyCart);
   const [order, setOrder] = useState(null);
+  const [toast, setToast] = useState({ open: false, message: '', severity: 'error' });
+  const [loadingItems, setLoadingItems] = useState(new Set());
+
+  // Helper: Show toast notification
+  const showToast = (message, severity = 'error') => {
+    setToast({ open: true, message, severity });
+  };
+
+  // Helper: Close toast
+  const handleCloseToast = () => {
+    setToast({ ...toast, open: false });
+  };
+
+  // Helper: Calculate optimistic cart after adding an item
+  const calculateOptimisticAddCart = async (currentCart, itemId) => {
+    const existingItemIndex = currentCart.items.findIndex(item => item.productId === itemId);
+    
+    let newItems;
+    if (existingItemIndex >= 0) {
+      // Item exists, increment quantity
+      newItems = [...currentCart.items];
+      newItems[existingItemIndex] = {
+        ...newItems[existingItemIndex],
+        qty: newItems[existingItemIndex].qty + 1,
+        subtotal: newItems[existingItemIndex].price * (newItems[existingItemIndex].qty + 1),
+      };
+    } else {
+      // Item doesn't exist, fetch product data and add to cart
+      let productData = products.find(p => p.id === itemId);
+      
+      if (!productData) {
+        // Fallback: fetch from API if not in ProductContext
+        productData = await getProduct(itemId);
+      }
+      
+      newItems = [
+        ...currentCart.items,
+        {
+          id: Date.now(), // Temporary ID
+          cartId: currentCart.id,
+          productId: itemId,
+          qty: 1,
+          name: productData.name,
+          price: productData.price,
+          description: productData.description,
+          category: productData.category,
+          preview: productData.preview,
+          subtotal: productData.price,
+        },
+      ];
+    }
+
+    const newTotal = newItems.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2);
+    const newItemsCount = newItems.reduce((sum, item) => sum + item.qty, 0);
+
+    return {
+      ...currentCart,
+      items: newItems,
+      total: parseFloat(newTotal),
+      itemsCount: newItemsCount,
+    };
+  };
+
+  // Helper: Calculate optimistic cart after removing an item
+  const calculateOptimisticRemoveCart = (currentCart, itemId, qtyToRemove) => {
+    const existingItemIndex = currentCart.items.findIndex(item => item.productId === itemId);
+    
+    if (existingItemIndex < 0) {
+      return currentCart; // Item not found, no change
+    }
+
+    let newItems;
+    const existingItem = currentCart.items[existingItemIndex];
+    const newQty = existingItem.qty - qtyToRemove;
+
+    if (newQty <= 0) {
+      // Remove item completely
+      newItems = currentCart.items.filter((_, index) => index !== existingItemIndex);
+    } else {
+      // Decrease quantity
+      newItems = [...currentCart.items];
+      newItems[existingItemIndex] = {
+        ...existingItem,
+        qty: newQty,
+        subtotal: existingItem.price * newQty,
+      };
+    }
+
+    const newTotal = newItems.length > 0 
+      ? newItems.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2)
+      : 0;
+    const newItemsCount = newItems.length > 0
+      ? newItems.reduce((sum, item) => sum + item.qty, 0)
+      : 0;
+
+    return {
+      ...currentCart,
+      items: newItems,
+      total: parseFloat(newTotal),
+      itemsCount: newItemsCount,
+    };
+  };
 
   // Synchronize shopping cart when user logs in
   useEffect(() => {
@@ -80,17 +185,46 @@ export const CartProvider = ({ children }) => {
 */
 
   const handleAddToCart = async (itemId) => {
+    // Add to loading state
+    setLoadingItems(prev => new Set(prev).add(itemId));
+    
+    // Store previous cart state for rollback
+    const previousCart = { ...cart, items: [...cart.items] };
+    
     try {
+      // Step 1: Optimistically update the cart
+      const optimisticCart = await calculateOptimisticAddCart(cart, itemId);
+      setCart(optimisticCart);
+      localStorage.setItem('cart', JSON.stringify(optimisticCart));
+
+      // Step 2: Sync with server in the background
       let cartId = '';
       const storedCart = await JSON.parse(localStorage.getItem('cart'));
       if (storedCart) {
         cartId = storedCart.id;
       }
-      const updatedCart = await addToCart(itemId, cartId);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      setCart(updatedCart);
+      
+      const serverCart = await addToCart(itemId, cartId);
+      
+      // Step 3: Update with server response (ensures consistency)
+      setCart(serverCart);
+      localStorage.setItem('cart', JSON.stringify(serverCart));
     } catch (error) {
       console.error('Failed to add item to cart', error);
+      
+      // Rollback to previous state
+      setCart(previousCart);
+      localStorage.setItem('cart', JSON.stringify(previousCart));
+      
+      // Show error notification
+      showToast('Failed to add item to cart. Please try again.');
+    } finally {
+      // Remove from loading state
+      setLoadingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(itemId);
+        return newSet;
+      });
     }
   };
 
@@ -110,12 +244,40 @@ export const CartProvider = ({ children }) => {
   */
   
   const handleRemoveFromCart = async (itemId, qtyToRemove) => {
+    // Add to loading state
+    setLoadingItems(prev => new Set(prev).add(itemId));
+    
+    // Store previous cart state for rollback
+    const previousCart = { ...cart, items: [...cart.items] };
+    
     try {
-      const updatedCart = await removeFromCart(itemId, cart.id, qtyToRemove);
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
-      setCart(updatedCart);
+      // Step 1: Optimistically update the cart
+      const optimisticCart = calculateOptimisticRemoveCart(cart, itemId, qtyToRemove);
+      setCart(optimisticCart);
+      localStorage.setItem('cart', JSON.stringify(optimisticCart));
+
+      // Step 2: Sync with server in the background
+      const serverCart = await removeFromCart(itemId, cart.id, qtyToRemove);
+      
+      // Step 3: Update with server response (ensures consistency)
+      setCart(serverCart);
+      localStorage.setItem('cart', JSON.stringify(serverCart));
     } catch (error) {
       console.error('Failed to remove item from cart', error);
+      
+      // Rollback to previous state
+      setCart(previousCart);
+      localStorage.setItem('cart', JSON.stringify(previousCart));
+      
+      // Show error notification
+      showToast('Failed to update cart. Please try again.');
+    } finally {
+      // Remove from loading state
+      setLoadingItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(itemId);
+        return newSet;
+      });
     }
   };
 
@@ -154,10 +316,17 @@ export const CartProvider = ({ children }) => {
         handleAddToCart,
         handleRemoveFromCart,
         order,
-        setOrder
+        setOrder,
+        loadingItems,
       }}
     >
       {children}
+      <Toast
+        open={toast.open}
+        message={toast.message}
+        severity={toast.severity}
+        onClose={handleCloseToast}
+      />
     </CartContext.Provider>
   );
 };

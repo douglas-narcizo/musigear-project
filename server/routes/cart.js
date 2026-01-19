@@ -20,7 +20,7 @@ module.exports = cartRouter;
 
 /**
  * @swagger
- * /api/cart:
+ * /cart:
  *   post:
  *     summary: this route is intended to be used when you DON'T have a CART ID, when the first product is added.
  *     tags: [cart]
@@ -51,20 +51,8 @@ module.exports = cartRouter;
  *         description: Bad request
  *   get:
  *     summary: use this endpoint to get the shopping cart object for the current user, if logged in.
+ *     description: User ID is retrieved from the session (user must be authenticated)
  *     tags: [cart]
- *     requestBody:
- *       description: If user is logged in, their ID is retrieved from session and attached to the request
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 description: the User ID must be provided by the user session - the user must be signed in
- *                 example: "01234567-89ab-cdef-0123-456789abcedf"
  *     responses:
  *       200:
  *         description: OK - the cart object is returned
@@ -74,31 +62,24 @@ module.exports = cartRouter;
  *               $ref: '#/components/schemas/cart'
  *       400:
  *         description: Cart not found
+ *       401:
+ *         description: Unauthorized - user not authenticated
  *   delete:
  *     summary: DELETEs the cart for the current user, if logged in
+ *     description: User ID is retrieved from the session (user must be authenticated)
  *     tags: [cart]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 description: the ID of the user whose cart should be deleted
- *                 example: "01234567-89ab-cdef-0123-456789abcedf"
  *     responses:
  *       204:
  *         description: No content - cart deleted
+ *       401:
+ *         description: Unauthorized - user not authenticated
  *       500:
  *         description: Server error
  */
 
 /**
  * @swagger
- * /api/cart/{cartId}:
+ * /cart/{cartId}:
  *   post:
  *     summary: a POST request to this endpoint ADDS or UPDATES a product in the provided shopping cart
  *     tags: [cart]
@@ -195,7 +176,7 @@ module.exports = cartRouter;
 
 /**
  * @swagger
- * /api/cart/{cartId}/checkout:
+ * /cart/{cartId}/checkout:
  *   post:
  *     summary: creates an order from the provided shopping cart
  *     tags: [cart]

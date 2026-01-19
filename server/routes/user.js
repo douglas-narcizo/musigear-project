@@ -8,10 +8,11 @@ userRouter.route('/register')
 
 /**
  * @swagger
- * /api/user/register:
+ * /user/register:
  *   post:
  *     summary: register a new user's account
  *     tags: [user]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -72,10 +73,11 @@ userRouter.route('/login')
 
 /**
  * @swagger
- * /api/user/login:
+ * /user/login:
  *   post:
  *     summary: logs user into the system
  *     tags: [user]
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,10 +124,11 @@ userRouter.get('/google', passport.authenticate('google', { scope: ['profile', '
 
 /**
  * @swagger
- * /api/user/google:
+ * /user/google:
  *   get:
  *     summary: Initiates Google authentication
  *     tags: [user]
+ *     security: []
  *     responses:
  *       302:
  *         description: Redirects to Google for authentication
@@ -141,10 +144,11 @@ userRouter.get('/google/callback',
 
 /**
  * @swagger
- * /api/user/google/callback:
+ * /user/google/callback:
  *   get:
  *     summary: Handles Google authentication callback
  *     tags: [user]
+ *     security: []
  *     responses:
  *       302:
  *         description: Redirects to home page on successful authentication
@@ -157,10 +161,11 @@ userRouter.get('/facebook', passport.authenticate('facebook', { scope: ['public_
 
 /**
  * @swagger
- * /api/user/facebook:
+ * /user/facebook:
  *   get:
  *     summary: Initiates Facebook authentication
  *     tags: [user]
+ *     security: []
  *     responses:
  *       302:
  *         description: Redirects to Facebook for authentication
@@ -176,10 +181,11 @@ userRouter.get('/facebook/callback',
 
 /**
  * @swagger
- * /api/user/facebook/callback:
+ * /user/facebook/callback:
  *   get:
  *     summary: Handles Facebook authentication callback
  *     tags: [user]
+ *     security: []
  *     responses:
  *       302:
  *         description: Redirects to home page on successful authentication
@@ -201,7 +207,7 @@ userRouter.route('/verify-session')
 
 /**
  * @swagger
- * /api/user/verify-session:
+ * /user/verify-session:
  *   get:
  *     summary: returns the authentication status for the current session
  *     tags: [user]
@@ -241,7 +247,7 @@ userRouter.post('/logout', (req, res, next) => {
 
 /**
  * @swagger
- * /api/user/logout:
+ * /user/logout:
  *   post:
  *     summary: logs out current logged in user session
  *     tags: [user]
@@ -259,22 +265,11 @@ module.exports = userRouter;
 
 /**
  * @swagger
- * /api/user:
+ * /user:
  *   get:
  *     summary: returns the currently logged user object
+ *     description: User ID is retrieved from the session (user must be authenticated)
  *     tags: [user]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 description: the ID of the user to be retrieved
- *                 example: "01234567-89ab-cdef-0123-456789abcedf"
  *     responses:
  *       200:
  *         description: OK - the user object is returned
@@ -282,10 +277,13 @@ module.exports = userRouter;
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/user'
+ *       401:
+ *         description: Unauthorized - user not authenticated
  *       404:
  *         description: user not found
  *   put:
  *     summary: UPDATES a user's info
+ *     description: User ID is retrieved from the session (user must be authenticated)
  *     tags: [user]
  *     requestBody:
  *       required: true
@@ -294,11 +292,6 @@ module.exports = userRouter;
  *           schema:
  *             type: object
  *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 description: ID of user to update
- *                 example: "01234567-89ab-cdef-0123-456789abcedf"
  *               email:
  *                 type: string
  *                 description: The email that is used to log into user account
@@ -323,22 +316,13 @@ module.exports = userRouter;
  *         description: Bad request
  *   delete:
  *     summary: DELETEs the user with provided ID
+ *     description: User ID is retrieved from the session (user must be authenticated)
  *     tags: [user]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               userId:
- *                 type: string
- *                 format: uuid
- *                 description: the ID of the user to be deleted
- *                 example: "01234567-89ab-cdef-0123-456789abcedf"
  *     responses:
  *       204:
  *         description: No content - user deleted
+ *       401:
+ *         description: Unauthorized - user not authenticated
  *       500:
  *         description: Server error
  */

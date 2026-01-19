@@ -16,7 +16,29 @@ module.exports = orderRouter;
 
 /**
  * @swagger
- * /api/order/{orderId}:
+ * /order:
+ *   get:
+ *     summary: returns all orders for the current user
+ *     description: User ID is retrieved from the session (user must be authenticated)
+ *     tags: [orders]
+ *     responses:
+ *       200:
+ *         description: OK - array of order objects is returned
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/order'
+ *       401:
+ *         description: Unauthorized - user not authenticated
+ *       404:
+ *         description: No orders found
+ */
+
+/**
+ * @swagger
+ * /order/{orderId}:
  *   get:
  *     summary: returns the identified order object
  *     tags: [orders]
@@ -76,19 +98,11 @@ module.exports = orderRouter;
  *         description: No content - order deleted
  *       500:
  *         description: Server error
- * /api/order/create-payment-intent:
+ * /order/create-payment-intent:
  *   post:
  *     summary: Create a payment intent for the order
  *     tags: [orders]
- *     parameters:
- *       - name: orderId
- *         in: path
- *         description: ID of the order to create a payment intent for
- *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *           example: "01234567-89ab-cdef-0123-456789abcedf"
+ *     security: []
  *     requestBody:
  *       required: true
  *       content:

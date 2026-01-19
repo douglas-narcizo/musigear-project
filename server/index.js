@@ -23,6 +23,7 @@ const userRouter = require('./routes/user');
 const productRouter = require('./routes/product');
 const cartRouter = require('./routes/cart');
 const orderRouter = require('./routes/order');
+const healthRouter = require('./routes/health');
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
@@ -108,15 +109,7 @@ app.use('/user', userRouter);
 app.use('/products', productRouter);
 app.use('/cart', cartRouter);
 app.use('/order', orderRouter);
-
-app.get('/health', (req, res) => { 
-  res.sendStatus(200); 
-});
-
-app.get('/test-session', (req, res) => {
-  req.session.test = 'test value';
-  res.send('Session set');
-});
+app.use('/health', healthRouter);
 
 // render index.html for root URL
 // app.use(express.static('public'));
